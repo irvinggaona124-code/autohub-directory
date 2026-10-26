@@ -7,10 +7,10 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "astro build && git -C dist add -A && git -C dist commit -m \"deploy: site update\" && git -C dist push origin gh-pages"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.2.1",
     "@astrojs/tailwind": "^5.1.5",
     "astro": "^4.16.18",
     "tailwindcss": "^3.4.17"
