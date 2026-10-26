@@ -1,0 +1,23 @@
+{
+  "system": "Notion Agency OS",
+  "version": "2.4",
+  "databases": [
+    {
+      "name": "CRM & Clientes",
+      "properties": ["Nombre", "Empresa", "Etapa_Pipeline", "Valor_Acuerdo_USD", "Email", "Telefono", "Ultimo_Contacto", "Responsable"]
+    },
+    {
+      "name": "Proyectos & Entregables",
+      "properties": ["Proyecto", "Cliente_Relacionado", "Estado", "Fecha_Entrega", "Prioridad", "Horas_Estimadas"]
+    },
+    {
+      "name": "Tareas Operativas",
+      "properties": ["Tarea", "Proyecto_Relacionado", "Asignado_A", "Fecha_Limite", "Completada"]
+    },
+    {
+      "name": "Control Financiero & Facturacion",
+      "properties": ["Numero_Factura", "Cliente", "Monto_USD", "Estado_Cobro", "Fecha_Emision", "Fecha_Vencimiento", "Metodo_Pago"]
+    }
+  ],
+  "duplicationUrl": "https://notion.so/templates/agency-os-demo-autohub"
+}

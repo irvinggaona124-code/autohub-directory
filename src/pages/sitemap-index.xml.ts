@@ -12,6 +12,7 @@ export const GET: APIRoute = async ({ site }) => {
     '',
     '/directorio',
     '/plantillas',
+    '/bundle',
     '/integraciones',
     '/alternativas',
     '/enviar',
@@ -24,7 +25,7 @@ export const GET: APIRoute = async ({ site }) => {
     urls.push({
       loc: `${baseUrl}${page}/`,
       changefreq: page === '' ? 'daily' : 'weekly',
-      priority: page === '' ? '1.0' : '0.8',
+      priority: page === '' || page === '/bundle' ? '1.0' : '0.8',
     });
   }
 
