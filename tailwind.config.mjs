@@ -5,28 +5,48 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
-          950: '#1e1b4b',
+        forest: {
+          950: '#132F2A',
+          900: '#173B35', // Hero & Brand Dark
+          800: '#1E302B',
+          700: '#326057',
+          600: '#55756D',
         },
-        surface: {
-          900: '#0f172a',
-          800: '#1e293b',
-          700: '#334155',
-          600: '#475569',
+        terracotta: {
+          400: '#E58A6C',
+          500: '#DF7655', // Brand Accent CTA
+          600: '#B9583C',
+          700: '#9A4E39',
+          800: '#85442F',
+        },
+        sand: {
+          50: '#FFFDF7', // Pure Warm White
+          100: '#F6F3EB', // Page Background
+          200: '#EEF1E8',
+          300: '#E8ECE3',
+          400: '#DFE2D9',
+          500: '#D9DED4', // Subtle Border
+        },
+        sage: {
+          300: '#D2DDD2',
+          400: '#B7C9BD',
+          500: '#98AC9E',
+          600: '#72917F',
+          700: '#58665E', // Muted Body Text
+          800: '#52615A',
+        },
+        gold: {
+          300: '#F4E9BF',
+          400: '#E6C766',
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['"DM Serif Display"', 'Georgia', 'serif'],
+        sans: ['"DM Sans"', 'system-ui', 'sans-serif'],
+      },
+      borderRadius: {
+        pill: '99px',
+        card: '17px',
       }
     },
   },

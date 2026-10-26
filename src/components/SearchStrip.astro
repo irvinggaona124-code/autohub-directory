@@ -1,0 +1,79 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="relative z-20 max-w-4xl mx-auto -mt-10 sm:-mt-12 px-4">
+  <form
+    action={`${base}/vacantes`}
+    method="GET"
+    class="rounded-card bg-sand-50 border border-sand-500/80 p-3 sm:p-4 shadow-xl shadow-forest-950/10 flex flex-col md:flex-row items-stretch gap-3"
+  >
+    <!-- Query input -->
+    <div class="flex-grow flex items-center gap-3 px-3 py-2 rounded-xl bg-white border border-sand-400 focus-within:border-forest-900 transition-colors">
+      <span class="text-sage-600 text-base">🔍</span>
+      <div class="w-full">
+        <label for="q" class="text-[10px] uppercase font-bold text-sage-600 block leading-tight">
+          ¿Qué te gustaría aprender?
+        </label>
+        <input
+          type="text"
+          name="q"
+          id="q"
+          placeholder="Ej. datos, diseño, finanzas, código"
+          class="w-full bg-transparent text-xs sm:text-sm font-semibold text-forest-900 placeholder-sage-400 focus:outline-none"
+        />
+      </div>
+    </div>
+
+    <!-- Location Selector -->
+    <div class="md:w-52 flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-sand-400 focus-within:border-forest-900 transition-colors">
+      <span class="text-sage-600 text-sm">📍</span>
+      <div class="w-full">
+        <label for="ubicacion" class="text-[10px] uppercase font-bold text-sage-600 block leading-tight">
+          Dónde
+        </label>
+        <select
+          name="ubicacion"
+          id="ubicacion"
+          class="w-full bg-transparent text-xs sm:text-sm font-semibold text-forest-900 focus:outline-none cursor-pointer"
+        >
+          <option value="">Todo Panamá</option>
+          <option value="Ciudad de Panamá">Ciudad de Panamá</option>
+          <option value="Bella Vista">Bella Vista</option>
+          <option value="Clayton">Clayton / Balboa</option>
+          <option value="Costa del Este">Costa del Este</option>
+          <option value="Remoto">Remoto</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Route Selector -->
+    <div class="md:w-52 flex items-center gap-2 px-3 py-2 rounded-xl bg-white border border-sand-400 focus-within:border-forest-900 transition-colors">
+      <span class="text-sage-600 text-sm">🎓</span>
+      <div class="w-full">
+        <label for="ruta" class="text-[10px] uppercase font-bold text-sage-600 block leading-tight">
+          Ruta
+        </label>
+        <select
+          name="ruta"
+          id="ruta"
+          class="w-full bg-transparent text-xs sm:text-sm font-semibold text-forest-900 focus:outline-none cursor-pointer"
+        >
+          <option value="">Todas las rutas</option>
+          <option value="Pasantía formativa">Pasantía formativa</option>
+          <option value="Práctica profesional">Práctica profesional</option>
+          <option value="Primer empleo">Primer empleo</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Search Button (Terracotta Pill) -->
+    <button
+      type="submit"
+      class="rounded-pill bg-terracotta-500 hover:bg-terracotta-600 px-7 py-3 text-sm font-bold text-white shadow-md shadow-terracotta-500/20 transition-all hover:scale-[1.02] active:scale-[0.98] shrink-0 flex items-center justify-center gap-2"
+    >
+      <span>Buscar</span>
+      <span>→</span>
+    </button>
+  </form>
+</div>

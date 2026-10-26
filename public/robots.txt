@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://autohub-directory.github.io/sitemap-index.xml
+Sitemap: https://irvinggaona124-code.github.io/autohub-directory/sitemap-index.xml

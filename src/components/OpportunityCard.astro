@@ -1,0 +1,97 @@
+---
+interface Props {
+  id: string;
+  empresa: string;
+  inicialEmpresa?: string;
+  titulo: string;
+  ruta: string;
+  estipendio: string;
+  modalidad: string;
+  ubicacion: string;
+  area: string;
+  mentorAsignado?: boolean;
+  sinExperiencia?: boolean;
+}
+
+const {
+  id,
+  empresa,
+  inicialEmpresa = empresa.charAt(0).toUpperCase(),
+  titulo,
+  ruta,
+  estipendio,
+  modalidad,
+  ubicacion,
+  area,
+  mentorAsignado = true,
+  sinExperiencia = true,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<div class="group relative flex flex-col justify-between rounded-card border border-sand-500 bg-sand-50 p-6 transition-all duration-200 hover:-translate-y-1 hover:border-forest-900/40 hover:shadow-md">
+  <div>
+    <!-- Header with Avatar and Company -->
+    <div class="flex items-start justify-between gap-3 mb-4">
+      <div class="flex items-center gap-3">
+        <!-- Company Avatar Circle -->
+        <div class="w-10 h-10 rounded-full bg-forest-900/10 border border-forest-900/20 text-forest-900 font-serif font-bold text-lg flex items-center justify-center shrink-0">
+          {inicialEmpresa}
+        </div>
+        <div>
+          <span class="text-xs font-semibold text-sage-700 block tracking-wide">
+            {empresa}
+          </span>
+          <span class="text-[11px] text-sage-600">
+            {ubicacion}
+          </span>
+        </div>
+      </div>
+
+      <!-- Stipend Tag -->
+      <span class="rounded-pill bg-terracotta-500/10 border border-terracotta-500/30 px-3 py-1 text-xs font-bold text-terracotta-600 shrink-0">
+        {estipendio}
+      </span>
+    </div>
+
+    <!-- Vacancy Title -->
+    <h3 class="font-serif text-lg font-bold text-forest-900 group-hover:text-terracotta-600 transition-colors mb-3 leading-snug">
+      <a href={`${base}/vacantes/${id}`}>
+        {titulo}
+      </a>
+    </h3>
+
+    <!-- Feature Badges -->
+    <div class="flex flex-wrap items-center gap-1.5 mb-6">
+      <span class="rounded-pill bg-sand-200 px-2.5 py-0.5 text-[11px] font-medium text-forest-900">
+        {ruta}
+      </span>
+      <span class="rounded-pill bg-sand-200 px-2.5 py-0.5 text-[11px] font-medium text-forest-900">
+        {modalidad}
+      </span>
+      {sinExperiencia && (
+        <span class="rounded-pill bg-forest-900/10 px-2.5 py-0.5 text-[11px] font-semibold text-forest-900">
+          ✓ Sin experiencia
+        </span>
+      )}
+      {mentorAsignado && (
+        <span class="rounded-pill bg-forest-900/10 px-2.5 py-0.5 text-[11px] font-semibold text-forest-900">
+          ✓ Tutor asignado
+        </span>
+      )}
+    </div>
+  </div>
+
+  <!-- Bottom CTA -->
+  <div class="pt-4 border-t border-sand-400/70 flex items-center justify-between">
+    <span class="text-xs font-semibold text-sage-700">Área: {area}</span>
+    <a
+      href={`${base}/vacantes/${id}`}
+      class="inline-flex items-center gap-1 text-xs font-bold text-forest-900 hover:text-terracotta-600 transition-colors"
+    >
+      <span>Conocer vacante</span>
+      <span class="inline-block transform group-hover:translate-x-1 transition-transform">→</span>
+    </a>
+  </div>
+</div>

@@ -3,62 +3,65 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const currentPath = Astro.url.pathname;
 
 const navItems = [
-  { name: 'Directorio', href: `${base}/directorio` },
-  { name: 'Integraciones pSEO', href: `${base}/integraciones` },
-  { name: 'Alternativas Open-Source', href: `${base}/alternativas` },
-  { name: 'Plantillas n8n', href: `${base}/plantillas` },
-  { name: 'Pack Completo', href: `${base}/bundle`, badge: '-70%' },
+  { name: 'Vacantes', href: `${base}/vacantes` },
+  { name: 'Perfil estudiante', href: `${base}/estudiantes` },
+  { name: 'Empresa formadora', href: `${base}/empresas` },
+  { name: 'Talento anónimo', href: `${base}/talento` },
+  { name: 'Guía', href: `${base}/guia` },
 ];
 ---
 
-<header class="sticky top-0 z-50 backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-    <!-- Logo -->
+<header class="sticky top-0 z-50 backdrop-blur-md bg-sand-100/90 border-b border-sand-500/70 transition-all">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <!-- Brand Logo -->
     <a href={`${base}/`} class="flex items-center gap-3 group">
-      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-500/25 group-hover:scale-105 transition-transform">
-        ⚡
+      <!-- Arch Mark Icon (Figma EL-deb6a0bd) -->
+      <div class="w-8 h-8 rounded-[14px] bg-forest-900 flex items-center justify-center text-white text-base font-bold shadow-sm group-hover:bg-forest-800 transition-colors">
+        <span class="inline-block transform -translate-y-0.5">∩</span>
       </div>
-      <div>
-        <span class="text-lg font-bold tracking-tight text-white group-hover:text-brand-300 transition-colors">
-          Auto<span class="text-brand-400">Hub</span>
-        </span>
-        <span class="hidden sm:inline-block text-[10px] uppercase font-semibold tracking-wider text-slate-400 block -mt-1">
-          Directorio IA & Workflows
-        </span>
-      </div>
+      <span class="font-serif text-2xl font-bold tracking-tight text-forest-900 group-hover:text-forest-700 transition-colors">
+        Umbral
+      </span>
+      <span class="hidden md:inline-block text-[11px] font-medium tracking-wide text-sage-700 uppercase ml-1">
+        Panamá
+      </span>
     </a>
 
     <!-- Nav Links Desktop -->
-    <nav class="hidden md:flex items-center gap-1">
+    <nav class="hidden lg:flex items-center gap-1">
       {navItems.map((item) => {
         const isActive = currentPath === item.href || (item.href !== `${base}/` && currentPath.startsWith(item.href));
         return (
           <a
             href={item.href}
-            class={`relative px-3 py-2 text-xs lg:text-sm font-medium rounded-lg transition-colors flex items-center gap-1.5 ${
+            class={`px-4 py-2 text-sm font-medium rounded-pill transition-all ${
               isActive
-                ? 'text-white bg-slate-800/80'
-                : 'text-slate-300 hover:text-white hover:bg-slate-900'
+                ? 'text-forest-900 font-semibold bg-sand-200'
+                : 'text-sage-700 hover:text-forest-900 hover:bg-sand-200/60'
             }`}
           >
             {item.name}
-            {item.badge && (
-              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                {item.badge}
-              </span>
-            )}
           </a>
         );
       })}
     </nav>
 
-    <!-- Right Actions -->
+    <!-- Header Actions (Figma EL-3743580b & EL-174c046d) -->
     <div class="flex items-center gap-3">
+      <!-- Outline Button -->
       <a
-        href={`${base}/enviar`}
-        class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-lg bg-gradient-to-r from-brand-600 to-indigo-600 text-white hover:from-brand-500 hover:to-indigo-500 shadow-md shadow-brand-600/20 transition-all hover:shadow-brand-600/35 hover:-translate-y-0.5"
+        href={`${base}/empresas#publicar`}
+        class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-xs font-bold rounded-pill bg-sand-50 border border-sand-500 text-forest-900 hover:border-forest-900 hover:bg-white shadow-sm transition-all active:scale-[0.98]"
       >
-        <span>+ Publicar Herramienta</span>
+        Publicar vacante
+      </a>
+
+      <!-- Primary Forest Button -->
+      <a
+        href={`${base}/estudiantes`}
+        class="inline-flex items-center justify-center px-5 py-2 text-xs font-bold rounded-pill bg-forest-900 text-white hover:bg-forest-800 shadow-sm transition-all active:scale-[0.98]"
+      >
+        Crear perfil
       </a>
     </div>
   </div>

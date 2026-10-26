@@ -1,0 +1,366 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout
+  title="Empresas Formadoras · Pacto Ético y Publicación · Umbral Panamá"
+  description="Forma parte de la red de empresas formadoras en Panamá. Publica oportunidades con mentoría activa y sin barreras de experiencia previa."
+>
+  <main class="min-h-screen pb-20">
+    <!-- Intro Banner (Figma: Employer introduction) -->
+    <section class="border-b border-sand-400 bg-sand-200/40 py-12 sm:py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <span class="inline-block text-xs font-bold tracking-widest text-terracotta-500 uppercase mb-3">
+          PARA EMPRESAS FORMADORAS
+        </span>
+        <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl text-forest-900 font-normal tracking-tight mb-4 max-w-3xl">
+          El talento también se forma desde cero.
+        </h1>
+        <p class="text-sm sm:text-base text-sage-700 max-w-2xl leading-relaxed">
+          Publica una oportunidad con mentoría y expectativas claras. Sin pedir años de experiencia imposible para quien apenas está comenzando.
+        </p>
+      </div>
+    </section>
+
+    <!-- Two-Column Layout -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10" id="publicar">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left Sidebar: Pacto Formador (Figma: Employer pact sidebar) -->
+        <aside class="lg:col-span-4 space-y-6" id="pacto">
+          <div class="bg-sand-50 border border-sand-400 rounded-2xl p-6 sm:p-7 shadow-sm">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-terracotta-500 block mb-2">
+              PACTO FORMADOR
+            </span>
+            <h2 class="font-serif text-2xl text-forest-900 leading-snug mb-3">
+              Una buena vacante empieza por ser honesta.
+            </h2>
+            <p class="text-xs text-sage-700 leading-relaxed mb-6">
+              Los tres compromisos innegociables para publicar vacantes formativas en Umbral:
+            </p>
+
+            <!-- 3 Pact Pillars -->
+            <div class="space-y-4">
+              <!-- Pact 1 -->
+              <div class="p-3.5 rounded-xl bg-sand-100 border border-sand-400">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-mono text-xs font-bold text-terracotta-500">01</span>
+                  <h3 class="text-xs font-bold text-forest-900">Sin experiencia previa</h3>
+                </div>
+                <p class="text-[11px] text-sage-700 leading-relaxed">
+                  Las vacantes no pueden exigir años previos en el rol. Se evalúa el potencial, la curiosidad y la motivación académica.
+                </p>
+              </div>
+
+              <!-- Pact 2 -->
+              <div class="p-3.5 rounded-xl bg-sand-100 border border-sand-400">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-mono text-xs font-bold text-terracotta-500">02</span>
+                  <h3 class="text-xs font-bold text-forest-900">Mentoría definida</h3>
+                </div>
+                <p class="text-[11px] text-sage-700 leading-relaxed">
+                  Cada pasante o practicante cuenta con un supervisor asignado con horas semanales dedicadas a orientar su progreso.
+                </p>
+              </div>
+
+              <!-- Pact 3 -->
+              <div class="p-3.5 rounded-xl bg-sand-100 border border-sand-400">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-mono text-xs font-bold text-terracotta-500">03</span>
+                  <h3 class="text-xs font-bold text-forest-900">Condiciones claras</h3>
+                </div>
+                <p class="text-[11px] text-sage-700 leading-relaxed">
+                  Horarios respetuosos con las clases universitarias y asignación económica transparente en Balboas (B/.) desde el primer día.
+                </p>
+              </div>
+            </div>
+
+            <!-- Additional guidance -->
+            <div class="mt-6 pt-6 border-t border-sand-400/80">
+              <a
+                href={`${base}/talento`}
+                class="inline-flex items-center gap-2 text-xs font-bold text-forest-900 hover:text-terracotta-500 transition-colors"
+              >
+                <span>Explorar Directorio de Talento Joven</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Right Main Card: Vacancy Form (Figma: Vacancy publication form) -->
+        <div class="lg:col-span-8">
+          <div class="bg-sand-50 border border-sand-400 rounded-2xl p-6 sm:p-8 shadow-sm">
+            <div>
+              <h2 class="font-serif text-2xl text-forest-900 font-normal">Publica una oportunidad</h2>
+              <p class="text-xs text-sage-700 mt-1">
+                Lo necesario para que el estudiante panameño sepa qué esperar de su etapa formativa.
+              </p>
+            </div>
+
+            <form id="employer-form" onsubmit="event.preventDefault(); window.previewVacancy();" class="space-y-5 mt-6">
+              
+              <!-- Company & Contact -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                    Nombre de empresa
+                  </label>
+                  <input
+                    type="text"
+                    id="emp-name"
+                    placeholder="Ej. Afluente Labs, Grupo Calesa, etc."
+                    required
+                    class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                    Correo de contacto
+                  </label>
+                  <input
+                    type="email"
+                    id="emp-email"
+                    placeholder="persona@empresa.com"
+                    required
+                    class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                  />
+                </div>
+              </div>
+
+              <!-- Vacancy Title -->
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                  Título de la oportunidad
+                </label>
+                <input
+                  type="text"
+                  id="vac-title"
+                  placeholder="Ej. Pasantía en Analítica de Negocio y Datos"
+                  required
+                  class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                />
+              </div>
+
+              <!-- Route & Modality -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                    Tipo de oportunidad
+                  </label>
+                  <select
+                    id="vac-route"
+                    class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                  >
+                    <option value="Pasantía formativa">Pasantía formativa (2 a 6 meses)</option>
+                    <option value="Práctica profesional">Práctica profesional (horas de grado)</option>
+                    <option value="Primer empleo">Primer empleo junior</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                    Modalidad
+                  </label>
+                  <select
+                    id="vac-modality"
+                    class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                  >
+                    <option value="Híbrido">Híbrido (Ciudad de Panamá)</option>
+                    <option value="Presencial">Presencial</option>
+                    <option value="Remoto">Remoto</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Learning outcome -->
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                  ¿Qué podrá aprender la persona?
+                </label>
+                <textarea
+                  id="vac-learning"
+                  rows="3"
+                  placeholder="Describe las tareas prácticas y el aprendizaje técnico o humano que desarrollará durante el periodo."
+                  required
+                  class="w-full bg-sand-100 border border-sand-400 rounded-2xl p-4 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                ></textarea>
+              </div>
+
+              <!-- Mentor & Stipend -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                    ¿Quién será su mentor o supervisor?
+                  </label>
+                  <input
+                    type="text"
+                    id="vac-mentor"
+                    placeholder="Ej. Líder de Operaciones / Ingeniero Senior"
+                    required
+                    class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                    Asignación económica sugerida
+                  </label>
+                  <input
+                    type="text"
+                    id="vac-stipend"
+                    value="B/. 450 al mes"
+                    required
+                    class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                  />
+                </div>
+              </div>
+
+              <!-- Experience Policy Callout (Figma #6:568) -->
+              <div class="bg-terracotta-100/60 border border-terracotta-200 rounded-xl p-4 flex items-start gap-3">
+                <span class="text-terracotta-700 font-bold text-sm">✓</span>
+                <p class="text-xs text-terracotta-800 leading-relaxed">
+                  <strong>Regla de oro:</strong> No exigir experiencia previa. Los anuncios que soliciten experiencia laboral anterior no pueden publicarse en Umbral.
+                </p>
+              </div>
+
+              <!-- Pact Consent Checkbox -->
+              <div class="flex items-center gap-3 pt-1">
+                <input
+                  type="checkbox"
+                  id="pact-consent"
+                  required
+                  checked
+                  class="rounded border-forest-900 text-forest-900 focus:ring-forest-900"
+                />
+                <label for="pact-consent" class="text-xs text-forest-900 cursor-pointer">
+                  Acepto el pacto de empresa formadora y me comprometo a brindar mentoría activa.
+                </label>
+              </div>
+
+              <!-- Actions (Figma: Actions) -->
+              <div class="pt-4 border-t border-sand-400/80 flex items-center justify-between">
+                <span class="text-xs text-sage-600">
+                  Demo interactiva · no se publica en servidores
+                </span>
+
+                <button
+                  type="submit"
+                  class="px-6 py-2.5 text-xs font-bold rounded-pill bg-terracotta-500 text-white hover:bg-terracotta-600 shadow-sm transition-all active:scale-[0.98]"
+                >
+                  Revisar oportunidad
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Demonstration Note -->
+          <p class="text-[11px] text-sage-600 mt-4 text-center lg:text-left">
+            DEMO LOCAL · Al hacer clic en "Revisar oportunidad" podrás previsualizar la tarjeta interactiva tal como la verían los estudiantes panameños.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Vacancy Preview Modal (Rendered on submit) -->
+    <div
+      id="preview-modal"
+      class="fixed inset-0 z-50 bg-forest-950/40 backdrop-blur-sm hidden flex items-center justify-center p-4"
+      onclick="if(event.target === this) window.closePreview();"
+    >
+      <div class="bg-sand-50 border border-sand-400 rounded-2xl max-w-lg w-full p-6 sm:p-8 shadow-xl relative animate-in fade-in zoom-in-95 duration-200">
+        <div class="flex items-center justify-between border-b border-sand-400 pb-3 mb-4">
+          <span class="text-xs font-bold uppercase tracking-wider text-terracotta-500">
+            Vista Previa de la Vacante
+          </span>
+          <button
+            onclick="window.closePreview()"
+            class="text-sage-600 hover:text-forest-900 text-lg font-bold p-1 leading-none"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="space-y-4 text-left">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-forest-900 text-white flex items-center justify-center font-bold text-lg font-serif">
+              <span id="prev-avatar">U</span>
+            </div>
+            <div>
+              <h3 id="prev-title" class="font-serif text-xl text-forest-900 font-bold leading-tight"></h3>
+              <p id="prev-company" class="text-xs text-sage-700"></p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2 text-[11px]">
+            <span id="prev-route" class="px-2.5 py-1 rounded-pill bg-sand-200 text-forest-900 font-semibold border border-sand-400"></span>
+            <span id="prev-modality" class="px-2.5 py-1 rounded-pill bg-sand-200 text-forest-900 font-semibold border border-sand-400"></span>
+            <span id="prev-stipend" class="px-2.5 py-1 rounded-pill bg-terracotta-100 text-terracotta-800 font-bold border border-terracotta-200"></span>
+          </div>
+
+          <div class="p-3 bg-sand-100 rounded-xl border border-sand-400 text-xs space-y-2">
+            <div>
+              <span class="font-bold text-forest-900 block">Mentor asignado:</span>
+              <span id="prev-mentor" class="text-sage-700"></span>
+            </div>
+            <div>
+              <span class="font-bold text-forest-900 block">Aprendizaje garantizado:</span>
+              <p id="prev-learning" class="text-sage-700 leading-relaxed"></p>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-sand-400 flex items-center justify-end gap-3">
+            <button
+              onclick="window.closePreview()"
+              class="px-4 py-2 text-xs font-semibold rounded-pill bg-sand-200 text-forest-900 hover:bg-sand-300 transition-all"
+            >
+              Editar datos
+            </button>
+            <a
+              href={`${base}/vacantes`}
+              class="px-5 py-2 text-xs font-bold rounded-pill bg-forest-900 text-white hover:bg-forest-800 shadow-sm transition-all"
+            >
+              Ver todas las vacantes
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script is:inline>
+  window.previewVacancy = function() {
+    const name = document.getElementById('emp-name')?.value || 'Empresa Aliada';
+    const title = document.getElementById('vac-title')?.value || 'Oportunidad Formativa';
+    const route = document.getElementById('vac-route')?.value || 'Pasantía formativa';
+    const modality = document.getElementById('vac-modality')?.value || 'Híbrido';
+    const stipend = document.getElementById('vac-stipend')?.value || 'B/. 450 al mes';
+    const mentor = document.getElementById('vac-mentor')?.value || 'Tutor designado';
+    const learning = document.getElementById('vac-learning')?.value || 'Mentoría y aprendizaje continuo.';
+
+    document.getElementById('prev-title').textContent = title;
+    document.getElementById('prev-company').textContent = name;
+    document.getElementById('prev-avatar').textContent = name.charAt(0).toUpperCase();
+    document.getElementById('prev-route').textContent = route;
+    document.getElementById('prev-modality').textContent = modality;
+    document.getElementById('prev-stipend').textContent = stipend;
+    document.getElementById('prev-mentor').textContent = mentor;
+    document.getElementById('prev-learning').textContent = learning;
+
+    const modal = document.getElementById('preview-modal');
+    if (modal) {
+      modal.classList.remove('hidden');
+    }
+  };
+
+  window.closePreview = function() {
+    const modal = document.getElementById('preview-modal');
+    if (modal) {
+      modal.classList.add('hidden');
+    }
+  };
+</script>

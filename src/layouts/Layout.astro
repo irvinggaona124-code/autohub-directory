@@ -11,10 +11,12 @@ interface Props {
   schema?: Record<string, any>;
 }
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 const {
   title,
-  description = 'Directorio curado de flujos de trabajo de automatización con IA, plantillas n8n y alternativas Open-Source para Marketing y E-commerce.',
-  image = '/og-image.png',
+  description = 'Umbral · Portal de pasantías y primeras oportunidades en Panamá. Tu primera oportunidad no debería pedir experiencia. Encuentra prácticas profesionales y pasantías formativas con mentoría.',
+  image = `${base}/og-image.png`,
   canonicalUrl = Astro.url.href,
   schema,
 } = Astro.props;
@@ -22,59 +24,64 @@ const {
 const defaultSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
-  name: 'AutoHub - Directorio de Automatización IA',
-  url: Astro.site ? Astro.site.href : 'https://autohub-directory.github.io',
+  name: 'Umbral · Portal de Pasantías de Panamá',
+  url: Astro.site ? Astro.site.href : 'https://irvinggaona124-code.github.io/autohub-directory/',
   description: description,
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: `${Astro.site ? Astro.site.href : 'https://autohub-directory.github.io'}/directorio?q={search_term_string}`,
-    'query-input': 'required name=search_term_string',
-  },
 };
 ---
 
 <!doctype html>
-<html lang="es" class="scroll-smooth dark">
+<html lang="es" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <meta name="generator" content={Astro.generator} />
 
     <!-- SEO Meta Tags -->
-    <title>{title} | AutoHub</title>
+    <title>{title} · Umbral Panamá</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={`${title} | AutoHub`} />
+    <meta property="og:title" content={`${title} · Umbral Panamá`} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalUrl} />
-    <meta property="twitter:title" content={`${title} | AutoHub`} />
+    <meta property="twitter:title" content={`${title} · Umbral Panamá`} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={image} />
 
     <!-- JSON-LD Schema -->
     <JsonLd schema={schema || defaultSchema} />
 
-    <!-- Payhip Checkout Embed -->
-    <script type="text/javascript" src="https://payhip.com/payhip.js"></script>
-
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: DM Serif Display & DM Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..700&family=DM+Serif+Display:ital@0;1&display=swap"
       rel="stylesheet"
     />
+
+    <style is:global>
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        ::before,
+        ::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+    </style>
   </head>
-  <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+  <body class="bg-sand-100 text-forest-950 font-sans antialiased min-h-screen flex flex-col selection:bg-terracotta-500 selection:text-white">
     <Header />
     <main class="flex-grow">
       <slot />

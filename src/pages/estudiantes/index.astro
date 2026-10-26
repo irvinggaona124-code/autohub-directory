@@ -1,0 +1,546 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout
+  title="Crear Perfil de Potencial · Umbral Panamá"
+  description="Construye tu perfil de potencial para pasantías formativas y prácticas profesionales en Panamá. Sin necesidad de CV previo ni experiencia laboral."
+>
+  <main class="min-h-screen pb-20">
+    <!-- Intro Banner (Figma: Student introduction) -->
+    <section class="border-b border-sand-400 bg-sand-200/40 py-12 sm:py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <span class="inline-block text-xs font-bold tracking-widest text-terracotta-500 uppercase mb-3">
+          PERFIL DE POTENCIAL
+        </span>
+        <h1 class="font-serif text-3xl sm:text-4xl md:text-5xl text-forest-900 font-normal tracking-tight mb-4 max-w-3xl">
+          Empieza por quien eres hoy.
+        </h1>
+        <p class="text-sm sm:text-base text-sage-700 max-w-2xl leading-relaxed">
+          Un perfil claro para oportunidades de entrada. No necesitas CV ni experiencia previa.
+        </p>
+      </div>
+    </section>
+
+    <!-- Two-Column Form Layout -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left Sidebar (Figma: Student sidebar) -->
+        <aside class="lg:col-span-4 space-y-6">
+          <div class="bg-sand-50 border border-sand-400 rounded-2xl p-6 sm:p-7 shadow-sm">
+            <span class="text-[11px] font-bold uppercase tracking-wider text-terracotta-500 block mb-2">
+              GRATIS PARA ESTUDIANTES
+            </span>
+            <h2 class="font-serif text-2xl text-forest-900 leading-snug mb-3">
+              Deja que tu potencial hable primero.
+            </h2>
+            <p class="text-xs text-sage-700 leading-relaxed mb-6">
+              Tres partes breves. El video y el inglés pueden completarse después.
+            </p>
+
+            <!-- Steps List -->
+            <div class="space-y-4" id="step-indicators">
+              <!-- Step 1 -->
+              <div
+                id="ind-1"
+                class="flex items-center gap-3 p-3 rounded-xl bg-sand-200/70 border border-sand-400 transition-all cursor-pointer"
+                onclick="window.goToStep(1)"
+              >
+                <span class="w-7 h-7 rounded-full bg-forest-900 text-white font-bold text-xs flex items-center justify-center">
+                  01
+                </span>
+                <div>
+                  <div class="text-xs font-bold text-forest-900">Tu camino académico</div>
+                  <div class="text-[11px] text-sage-600">Universidad, carrera y ruta</div>
+                </div>
+              </div>
+
+              <!-- Step 2 -->
+              <div
+                id="ind-2"
+                class="flex items-center gap-3 p-3 rounded-xl bg-sand-50 border border-transparent hover:border-sand-400 transition-all cursor-pointer"
+                onclick="window.goToStep(2)"
+              >
+                <span class="w-7 h-7 rounded-full bg-sand-300 text-forest-900 font-bold text-xs flex items-center justify-center">
+                  02
+                </span>
+                <div>
+                  <div class="text-xs font-semibold text-forest-900">Tus intereses y foco</div>
+                  <div class="text-[11px] text-sage-600">Habilidades e idiomas</div>
+                </div>
+              </div>
+
+              <!-- Step 3 -->
+              <div
+                id="ind-3"
+                class="flex items-center gap-3 p-3 rounded-xl bg-sand-50 border border-transparent hover:border-sand-400 transition-all cursor-pointer"
+                onclick="window.goToStep(3)"
+              >
+                <span class="w-7 h-7 rounded-full bg-sand-300 text-forest-900 font-bold text-xs flex items-center justify-center">
+                  03
+                </span>
+                <div>
+                  <div class="text-xs font-semibold text-forest-900">Tus evidencias</div>
+                  <div class="text-[11px] text-sage-600">Proyectos e iniciativas</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ethical Callout -->
+            <div class="mt-6 pt-6 border-t border-sand-400/80">
+              <div class="flex items-start gap-2.5 text-xs text-forest-900">
+                <span class="text-terracotta-500 font-bold text-sm">✓</span>
+                <p class="leading-relaxed">
+                  <strong>Privacidad protegida:</strong> Las empresas solo ven tu número anónimo hasta que apruebes una solicitud de contacto mutuo.
+                </p>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Right Main Card (Figma: Student profile form) -->
+        <div class="lg:col-span-8">
+          <div class="bg-sand-50 border border-sand-400 rounded-2xl p-6 sm:p-8 shadow-sm">
+            
+            <!-- 3-Segment Progress Bar -->
+            <div class="flex items-center gap-2 mb-6">
+              <div id="prog-bar-1" class="h-1.5 flex-1 rounded-full bg-terracotta-500 transition-all duration-300"></div>
+              <div id="prog-bar-2" class="h-1.5 flex-1 rounded-full bg-sand-300 transition-all duration-300"></div>
+              <div id="prog-bar-3" class="h-1.5 flex-1 rounded-full bg-sand-300 transition-all duration-300"></div>
+            </div>
+
+            <form id="student-form" onsubmit="event.preventDefault(); window.nextStep();" class="space-y-6">
+              
+              <!-- STEP 1 CONTAINER -->
+              <div id="step-content-1" class="space-y-6">
+                <div>
+                  <h3 class="font-serif text-2xl text-forest-900 font-normal">Cuéntanos tu ruta</h3>
+                  <p class="text-xs text-sage-700 mt-1">
+                    El contexto académico para mostrarte oportunidades formativas afines.
+                  </p>
+                </div>
+
+                <!-- Fields Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <!-- Name -->
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                      ¿Cómo te llamas?
+                    </label>
+                    <input
+                      type="text"
+                      id="std-name"
+                      placeholder="Tu nombre o seudónimo"
+                      required
+                      class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                    />
+                  </div>
+
+                  <!-- University -->
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                      Universidad o Instituto
+                    </label>
+                    <select
+                      id="std-uni"
+                      class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                    >
+                      <option value="UTP">Universidad Tecnológica de Panamá (UTP)</option>
+                      <option value="UP">Universidad de Panamá (UP)</option>
+                      <option value="USMA">Universidad Santa María La Antigua (USMA)</option>
+                      <option value="UIP">Universidad Interamericana de Panamá (UIP)</option>
+                      <option value="UDELAS">Universidad Especializada de las Américas (UDELAS)</option>
+                      <option value="OTRA">Otra institución educativa</option>
+                    </select>
+                  </div>
+
+                  <!-- Career -->
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                      Carrera o Especialidad
+                    </label>
+                    <input
+                      type="text"
+                      id="std-career"
+                      placeholder="Ej. Ingeniería Industrial, Mercadeo, Software..."
+                      required
+                      class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                    />
+                  </div>
+
+                  <!-- Current Stage -->
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                      Etapa actual
+                    </label>
+                    <select
+                      id="std-stage"
+                      class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                    >
+                      <option value="Ultimo año">Último año</option>
+                      <option value="Mitad de carrera">Mitad de carrera (3er año)</option>
+                      <option value="Primeros años">Primeros años (1er - 2do año)</option>
+                      <option value="Graduado reciente">Graduado reciente</option>
+                    </select>
+                  </div>
+
+                  <!-- Location -->
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                      Ubicación en Panamá
+                    </label>
+                    <input
+                      type="text"
+                      id="std-loc"
+                      value="Ciudad de Panamá"
+                      class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                    />
+                  </div>
+
+                  <!-- Route of interest -->
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                      Ruta que te interesa
+                    </label>
+                    <select
+                      id="std-route"
+                      class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                    >
+                      <option value="Práctica profesional">Práctica profesional (horas de grado)</option>
+                      <option value="Pasantía formativa">Pasantía formativa (2 a 6 meses)</option>
+                      <option value="Primer empleo">Primer empleo con mentoría</option>
+                      <option value="Explorando opciones">Explorando opciones</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Interests Tags Section -->
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-sage-700 mb-2">
+                    ¿QUÉ TE GUSTA HACER?
+                  </label>
+                  <p class="text-xs text-sage-600 mb-3">
+                    Selecciona las actividades en las que sientes mayor afinidad natural:
+                  </p>
+                  <div class="flex flex-wrap gap-2" id="interest-chips">
+                    {[
+                      'Encontrar patrones',
+                      'Crear ideas',
+                      'Mejorar procesos',
+                      'Ayudar a otras personas',
+                      'Analizar datos',
+                      'Diseño y creatividad',
+                      'Resolver problemas técnicos',
+                      'Coordinación de proyectos',
+                    ].map((interest, i) => (
+                      <button
+                        type="button"
+                        class={`interest-chip px-3 py-1.5 rounded-pill text-xs font-medium border transition-all ${
+                          i < 4
+                            ? 'bg-forest-900 text-white border-forest-900 shadow-sm'
+                            : 'bg-sand-100 text-forest-900 border-sand-400 hover:border-forest-900'
+                        }`}
+                        onclick="this.classList.toggle('bg-forest-900'); this.classList.toggle('text-white'); this.classList.toggle('border-forest-900'); this.classList.toggle('bg-sand-100'); this.classList.toggle('text-forest-900');"
+                      >
+                        {interest}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <!-- Consent Box (Figma: Privacy consent) -->
+                <div class="bg-[#EEF1E8] border border-sage-300/70 rounded-xl p-4 flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    id="consent-check"
+                    required
+                    checked
+                    class="mt-0.5 rounded border-forest-900 text-forest-900 focus:ring-forest-900"
+                  />
+                  <label for="consent-check" class="text-xs text-forest-900 leading-relaxed cursor-pointer">
+                    En una versión real, autorizo el uso de mis datos para oportunidades que elija. Puedo retirar el consentimiento en cualquier momento.
+                  </label>
+                </div>
+              </div>
+
+              <!-- STEP 2 CONTAINER (Hidden by default, shown via JS) -->
+              <div id="step-content-2" class="space-y-6 hidden">
+                <div>
+                  <h3 class="font-serif text-2xl text-forest-900 font-normal">Tus fortalezas y herramientas</h3>
+                  <p class="text-xs text-sage-700 mt-1">
+                    Comparte las herramientas con las que te sientes familiarizado y tu nivel de comunicación.
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                      Nivel de inglés
+                    </label>
+                    <select
+                      id="std-english"
+                      class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                    >
+                      <option value="B2 verificado">B2 Intermedio Avanzado (conversacional laboral)</option>
+                      <option value="C1 verificado">C1 Avanzado / Fluido profesional</option>
+                      <option value="B1 verificado">B1 Intermedio (lectura y comprensión)</option>
+                      <option value="A2 elemental">A2 Elemental</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                      Modalidad deseada
+                    </label>
+                    <select
+                      id="std-modality"
+                      class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                    >
+                      <option value="Híbrido">Híbrido (2-3 días presencial / remoto)</option>
+                      <option value="Presencial">Presencial</option>
+                      <option value="Remoto">100% Remoto</option>
+                    </select>
+                  </div>
+
+                  <div class="md:col-span-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                      Herramientas o software que utilizas
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Ej. Excel intermedio, Python básico, Canva, Figma, SQL, Google Suite..."
+                      class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- STEP 3 CONTAINER (Hidden by default, shown via JS) -->
+              <div id="step-content-3" class="space-y-6 hidden">
+                <div>
+                  <h3 class="font-serif text-2xl text-forest-900 font-normal">Tus evidencias de aprendizaje</h3>
+                  <p class="text-xs text-sage-700 mt-1">
+                    ¿Qué has construido en la universidad o por tu cuenta? No tiene que ser comercial.
+                  </p>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                    Describe 1 o 2 proyectos de aula o retos que hayas resuelto
+                  </label>
+                  <textarea
+                    rows="3"
+                    placeholder="Ej. Diseño de un modelo de simulación de filas para un supermercado en UTP, o coordinación de campaña estudiantil..."
+                    class="w-full bg-sand-100 border border-sand-400 rounded-2xl p-4 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                  ></textarea>
+                </div>
+
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-forest-900 mb-1.5">
+                    Enlace a proyectos, portafolio o perfil público (opcional)
+                  </label>
+                  <input
+                    type="url"
+                    placeholder="https://github.com/tu-usuario o enlace a Drive/Behance"
+                    class="w-full bg-sand-100 border border-sand-400 rounded-pill px-4 py-2.5 text-xs text-forest-900 placeholder-sage-500 focus:outline-none focus:ring-2 focus:ring-forest-900 transition-all"
+                  />
+                </div>
+              </div>
+
+              <!-- SUCCESS MESSAGE CONTAINER (Hidden until completed) -->
+              <div id="step-success" class="space-y-6 hidden text-center py-6">
+                <div class="w-16 h-16 rounded-full bg-forest-900 text-white flex items-center justify-center mx-auto text-2xl font-bold shadow-md">
+                  ✓
+                </div>
+                <div>
+                  <span class="inline-block px-3 py-1 bg-terracotta-100 text-terracotta-700 text-xs font-bold rounded-pill mb-2">
+                    ID Asignado: <span id="assigned-id">UTP-892</span>
+                  </span>
+                  <h3 class="font-serif text-2xl text-forest-900 font-normal">
+                    ¡Tu perfil de potencial está listo!
+                  </h3>
+                  <p class="text-xs text-sage-700 mt-2 max-w-md mx-auto leading-relaxed">
+                    Hemos anonimizado tus datos de contacto. Las empresas interesadas podrán solicitar un contacto formal a través del portal.
+                  </p>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+                  <a
+                    href={`${base}/vacantes`}
+                    class="inline-flex items-center justify-center px-6 py-2.5 text-xs font-bold rounded-pill bg-terracotta-500 text-white hover:bg-terracotta-600 shadow-sm transition-all"
+                  >
+                    Ver vacantes recomendadas
+                  </a>
+                  <a
+                    href={`${base}/talento`}
+                    class="inline-flex items-center justify-center px-6 py-2.5 text-xs font-bold rounded-pill bg-sand-200 border border-sand-400 text-forest-900 hover:bg-sand-300 transition-all"
+                  >
+                    Ver cómo luce en el directorio
+                  </a>
+                </div>
+              </div>
+
+              <!-- Form Action Bar (Figma: Student form action) -->
+              <div id="form-actions" class="pt-4 border-t border-sand-400/80 flex items-center justify-between">
+                <div class="text-xs text-sage-700" id="step-status-text">
+                  <span class="font-semibold text-forest-900">Paso 1 de 3</span> · No necesitas CV previo
+                </div>
+                
+                <div class="flex items-center gap-2">
+                  <button
+                    type="button"
+                    id="btn-prev"
+                    class="hidden px-4 py-2.5 text-xs font-semibold rounded-pill bg-sand-200 text-forest-900 hover:bg-sand-300 transition-all"
+                    onclick="window.prevStep()"
+                  >
+                    Atrás
+                  </button>
+                  <button
+                    type="submit"
+                    id="btn-next"
+                    class="px-6 py-2.5 text-xs font-bold rounded-pill bg-forest-900 text-white hover:bg-forest-800 shadow-sm transition-all active:scale-[0.98]"
+                  >
+                    Continuar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Demonstration Note (Figma #6:485) -->
+          <p class="text-[11px] text-sage-600 mt-4 text-center lg:text-left">
+            DEMO LOCAL · No ingreses datos sensibles. Esta simulación funciona 100% en tu navegador y no almacena información privada en servidores.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<script is:inline>
+  let currentStep = 1;
+  const maxStep = 3;
+
+  window.goToStep = function(step) {
+    if (step < 1 || step > maxStep) return;
+    currentStep = step;
+    updateStepView();
+  };
+
+  window.nextStep = function() {
+    if (currentStep < maxStep) {
+      currentStep++;
+      updateStepView();
+    } else {
+      // Completed form
+      showSuccess();
+    }
+  };
+
+  window.prevStep = function() {
+    if (currentStep > 1) {
+      currentStep--;
+      updateStepView();
+    }
+  };
+
+  function updateStepView() {
+    for (let i = 1; i <= maxStep; i++) {
+      const content = document.getElementById('step-content-' + i);
+      const ind = document.getElementById('ind-' + i);
+      const prog = document.getElementById('prog-bar-' + i);
+      
+      if (content) {
+        if (i === currentStep) {
+          content.classList.remove('hidden');
+        } else {
+          content.classList.add('hidden');
+        }
+      }
+
+      if (ind) {
+        if (i === currentStep) {
+          ind.classList.add('bg-sand-200/70', 'border-sand-400');
+          ind.classList.remove('bg-sand-50', 'border-transparent');
+          const circle = ind.querySelector('span');
+          if (circle) {
+            circle.className = 'w-7 h-7 rounded-full bg-forest-900 text-white font-bold text-xs flex items-center justify-center';
+          }
+        } else if (i < currentStep) {
+          ind.classList.remove('bg-sand-200/70', 'border-sand-400');
+          ind.classList.add('bg-sand-50', 'border-transparent');
+          const circle = ind.querySelector('span');
+          if (circle) {
+            circle.className = 'w-7 h-7 rounded-full bg-forest-800 text-white font-bold text-xs flex items-center justify-center';
+            circle.innerHTML = '✓';
+          }
+        } else {
+          ind.classList.remove('bg-sand-200/70', 'border-sand-400');
+          ind.classList.add('bg-sand-50', 'border-transparent');
+          const circle = ind.querySelector('span');
+          if (circle) {
+            circle.className = 'w-7 h-7 rounded-full bg-sand-300 text-forest-900 font-bold text-xs flex items-center justify-center';
+            circle.innerHTML = '0' + i;
+          }
+        }
+      }
+
+      if (prog) {
+        if (i <= currentStep) {
+          prog.classList.add('bg-terracotta-500');
+          prog.classList.remove('bg-sand-300');
+        } else {
+          prog.classList.remove('bg-terracotta-500');
+          prog.classList.add('bg-sand-300');
+        }
+      }
+    }
+
+    const prevBtn = document.getElementById('btn-prev');
+    const nextBtn = document.getElementById('btn-next');
+    const statusText = document.getElementById('step-status-text');
+
+    if (prevBtn) {
+      if (currentStep > 1) {
+        prevBtn.classList.remove('hidden');
+      } else {
+        prevBtn.classList.add('hidden');
+      }
+    }
+
+    if (nextBtn) {
+      nextBtn.textContent = currentStep === maxStep ? 'Finalizar Perfil' : 'Continuar';
+    }
+
+    if (statusText) {
+      statusText.innerHTML = `<span class="font-semibold text-forest-900">Paso ${currentStep} de 3</span> · No necesitas CV previo`;
+    }
+  }
+
+  function showSuccess() {
+    document.getElementById('step-content-1')?.classList.add('hidden');
+    document.getElementById('step-content-2')?.classList.add('hidden');
+    document.getElementById('step-content-3')?.classList.add('hidden');
+    document.getElementById('form-actions')?.classList.add('hidden');
+    
+    // Generate pseudo-anonymous code
+    const uni = document.getElementById('std-uni')?.value || 'UTP';
+    const randomCode = Math.floor(100 + Math.random() * 899);
+    const assigned = `${uni}-${randomCode}`;
+    const assignedEl = document.getElementById('assigned-id');
+    if (assignedEl) assignedEl.textContent = assigned;
+
+    document.getElementById('step-success')?.classList.remove('hidden');
+
+    for (let i = 1; i <= maxStep; i++) {
+      const prog = document.getElementById('prog-bar-' + i);
+      if (prog) {
+        prog.classList.add('bg-forest-900');
+        prog.classList.remove('bg-sand-300', 'bg-terracotta-500');
+      }
+    }
+  }
+</script>

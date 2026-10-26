@@ -1,0 +1,88 @@
+---
+interface Props {
+  codigo: string;
+  carrera: string;
+  universidad: string;
+  etapa: string;
+  ubicacion: string;
+  indice: string;
+  ingles: string;
+  afinidad: string;
+  perfilCompletado: number;
+}
+
+const {
+  codigo,
+  carrera,
+  universidad,
+  etapa,
+  ubicacion,
+  indice,
+  ingles,
+  afinidad,
+  perfilCompletado,
+} = Astro.props;
+---
+
+<div class="rounded-card border border-sand-500 bg-sand-50 p-6 flex flex-col justify-between hover:border-forest-900/40 hover:shadow-md transition-all">
+  <div>
+    <!-- Header with Code & Verified Badge -->
+    <div class="flex items-center justify-between gap-2 mb-4">
+      <span class="font-mono text-xs font-bold text-forest-900 bg-sand-200 px-2.5 py-1 rounded-md">
+        {codigo}
+      </span>
+      <span class="rounded-pill bg-forest-900/10 border border-forest-900/20 px-2.5 py-0.5 text-[11px] font-semibold text-forest-900">
+        ✓ Verificado
+      </span>
+    </div>
+
+    <!-- Career & Uni -->
+    <h3 class="font-serif text-lg font-bold text-forest-900 mb-1 leading-snug">
+      {carrera}
+    </h3>
+    <p class="text-xs text-sage-700 mb-4 font-medium">
+      {universidad} · <span class="text-sage-600">{etapa}</span>
+    </p>
+
+    <!-- Key Signals Grid -->
+    <div class="grid grid-cols-2 gap-2 mb-6">
+      <div class="rounded-xl bg-sand-200/70 p-2.5">
+        <span class="text-[10px] uppercase font-bold text-sage-600 block mb-0.5">Rendimiento</span>
+        <span class="text-xs font-bold text-forest-900">{indice}</span>
+      </div>
+      <div class="rounded-xl bg-sand-200/70 p-2.5">
+        <span class="text-[10px] uppercase font-bold text-sage-600 block mb-0.5">Inglés</span>
+        <span class="text-xs font-bold text-forest-900">{ingles}</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2 mb-4">
+      <span class="text-[11px] font-medium text-sage-600">Afinidad:</span>
+      <span class="rounded-pill bg-forest-900/10 px-2 py-0.5 text-xs font-bold text-forest-900">
+        {afinidad}
+      </span>
+    </div>
+  </div>
+
+  <!-- Progress bar & Action -->
+  <div class="pt-4 border-t border-sand-400/70 space-y-3">
+    <div>
+      <div class="flex items-center justify-between text-xs text-sage-700 font-medium mb-1.5">
+        <span>Perfil completado</span>
+        <span class="font-bold text-forest-900">{perfilCompletado}%</span>
+      </div>
+      <div class="w-full bg-sand-300 rounded-full h-1.5 overflow-hidden">
+        <div class="bg-forest-900 h-1.5 rounded-full" style={`width: ${perfilCompletado}%`}></div>
+      </div>
+    </div>
+
+    <!-- Action Button (Figma: Button / Solicitar contacto) -->
+    <button
+      type="button"
+      onclick={`window.openContactModal('${codigo}', '${carrera}', '${universidad}')`}
+      class="w-full py-2 px-3 text-xs font-bold rounded-pill bg-sand-200 border border-sand-400 text-forest-900 hover:bg-forest-900 hover:text-white hover:border-forest-900 transition-all active:scale-[0.98]"
+    >
+      Solicitar contacto
+    </button>
+  </div>
+</div>

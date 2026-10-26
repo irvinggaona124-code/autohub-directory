@@ -1,0 +1,262 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import OpportunityCard from '../../components/OpportunityCard.astro';
+
+const vacantes = await getCollection('vacantes');
+
+const rutas = ['Todas', 'Pasantía formativa', 'Práctica profesional', 'Primer empleo'];
+const modalidades = ['Todas', 'Remoto', 'Híbrido', 'Presencial'];
+const areas = ['Todas', 'Datos', 'Diseño', 'Operaciones', 'Comunicación', 'Tecnología', 'Finanzas'];
+---
+
+<Layout
+  title="Vacantes y Pasantías en Panamá"
+  description="Explora oportunidades formativas y prácticas profesionales en Panamá con mentoría asignada y sin requisitos de experiencia previa."
+>
+  <!-- Header Intro (Figma #6:222) -->
+  <div class="bg-forest-900 text-white py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <span class="text-xs font-bold uppercase tracking-wider text-gold-300 bg-white/10 px-3 py-1 rounded-pill mb-2 inline-block">
+        OPORTUNIDADES DE APRENDIZAJE
+      </span>
+      <h1 class="font-serif text-3xl sm:text-4xl font-normal text-sand-50 mb-2">
+        Encuentra dónde empezar.
+      </h1>
+      <p class="text-xs sm:text-sm text-sage-300 max-w-xl">
+        Todas las oportunidades en Umbral garantizan condiciones formativas claras, estipendio transparente y una persona mentora responsable.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Content: Sidebar + Results (Figma #6:226 & #6:242) -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Filter Sidebar (Col 1-3) -->
+      <aside class="lg:col-span-3 rounded-card border border-sand-500 bg-sand-50 p-6 sticky top-24 space-y-6">
+        <div class="flex items-center justify-between pb-3 border-b border-sand-400">
+          <h3 class="font-serif text-base font-bold text-forest-900">Filtrar por</h3>
+          <button
+            type="button"
+            id="resetFiltersBtn"
+            class="text-xs text-terracotta-600 font-semibold hover:underline"
+          >
+            Limpiar
+          </button>
+        </div>
+
+        <!-- Filter 1: RUTA -->
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-sage-700 mb-2.5">Ruta Formativa</h4>
+          <div class="space-y-1.5" id="routeFilters">
+            {rutas.map((r, idx) => (
+              <label class="flex items-center gap-2 text-xs text-forest-900 cursor-pointer hover:text-terracotta-600 transition-colors">
+                <input
+                  type="radio"
+                  name="filterRuta"
+                  value={r}
+                  checked={idx === 0}
+                  class="text-terracotta-500 focus:ring-terracotta-500 rounded-full cursor-pointer"
+                />
+                <span>{r}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <!-- Filter 2: MODALIDAD -->
+        <div class="pt-4 border-t border-sand-400/60">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-sage-700 mb-2.5">Modalidad</h4>
+          <div class="space-y-1.5" id="modalityFilters">
+            {modalidades.map((m, idx) => (
+              <label class="flex items-center gap-2 text-xs text-forest-900 cursor-pointer hover:text-terracotta-600 transition-colors">
+                <input
+                  type="radio"
+                  name="filterModalidad"
+                  value={m}
+                  checked={idx === 0}
+                  class="text-terracotta-500 focus:ring-terracotta-500 rounded-full cursor-pointer"
+                />
+                <span>{m}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        <!-- Filter 3: ÁREA -->
+        <div class="pt-4 border-t border-sand-400/60">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-sage-700 mb-2.5">Área de Interés</h4>
+          <div class="space-y-1.5" id="areaFilters">
+            {areas.map((a, idx) => (
+              <label class="flex items-center gap-2 text-xs text-forest-900 cursor-pointer hover:text-terracotta-600 transition-colors">
+                <input
+                  type="radio"
+                  name="filterArea"
+                  value={a}
+                  checked={idx === 0}
+                  class="text-terracotta-500 focus:ring-terracotta-500 rounded-full cursor-pointer"
+                />
+                <span>{a}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      </aside>
+
+      <!-- Vacancy Results (Col 4-12) -->
+      <main class="lg:col-span-9 space-y-6">
+        <!-- Search bar & Count bar -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          <div class="relative flex-grow max-w-md">
+            <input
+              type="text"
+              id="searchVacanciesInput"
+              placeholder="Buscar por rol, empresa o habilidad..."
+              class="w-full rounded-pill bg-sand-50 border border-sand-500 px-4 py-2.5 pl-10 text-xs sm:text-sm font-semibold text-forest-900 placeholder-sage-400 focus:outline-none focus:border-forest-900"
+            />
+            <span class="absolute left-3.5 top-2.5 text-sage-500 text-sm">🔍</span>
+          </div>
+
+          <div class="text-xs font-medium text-sage-700 shrink-0" id="resultsCount">
+            Mostrando {vacantes.length} oportunidades
+          </div>
+        </div>
+
+        <!-- Grid of Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="vacanciesGrid">
+          {vacantes.map((v) => (
+            <div
+              class="vacancy-item"
+              data-titulo={v.data.titulo.toLowerCase()}
+              data-empresa={v.data.empresa.toLowerCase()}
+              data-ruta={v.data.ruta}
+              data-modalidad={v.data.modalidad}
+              data-area={v.data.area}
+            >
+              <OpportunityCard
+                id={v.slug}
+                empresa={v.data.empresa}
+                inicialEmpresa={v.data.inicialEmpresa}
+                titulo={v.data.titulo}
+                ruta={v.data.ruta}
+                estipendio={v.data.estipendio}
+                modalidad={v.data.modalidad}
+                ubicacion={v.data.ubicacion}
+                area={v.data.area}
+                mentorAsignado={v.data.mentorAsignado}
+                sinExperiencia={v.data.sinExperiencia}
+              />
+            </div>
+          ))}
+        </div>
+
+        <!-- No Results Fallback -->
+        <div id="noVacancies" class="hidden text-center py-16 bg-sand-50 rounded-card border border-sand-400">
+          <div class="text-3xl mb-2">🔍</div>
+          <h3 class="font-serif text-lg font-bold text-forest-900 mb-1">No encontramos vacantes con estos filtros</h3>
+          <p class="text-xs text-sage-600 mb-4">Intenta ampliar tu búsqueda o cambiar el área o modalidad seleccionada.</p>
+          <button
+            type="button"
+            id="clearFiltersEmptyBtn"
+            class="rounded-pill bg-forest-900 px-5 py-2 text-xs font-bold text-white hover:bg-forest-800"
+          >
+            Ver todas las vacantes
+          </button>
+        </div>
+
+        <!-- Bottom verification note (Figma #6:314) -->
+        <p class="text-[11px] text-sage-600 text-center pt-6">
+          Contenido de ejemplo · Verifica siempre las condiciones con la institución educativa y la empresa formadora.
+        </p>
+      </main>
+    </div>
+  </div>
+
+  <!-- Client-side Interactive Filter Script -->
+  <script is:inline>
+    const searchInput = document.getElementById('searchVacanciesInput');
+    const items = document.querySelectorAll('.vacancy-item');
+    const resultsCount = document.getElementById('resultsCount');
+    const noVacancies = document.getElementById('noVacancies');
+    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+    const clearFiltersEmptyBtn = document.getElementById('clearFiltersEmptyBtn');
+
+    function applyFilters() {
+      const q = searchInput ? searchInput.value.toLowerCase().trim() : '';
+      const selectedRuta = document.querySelector('input[name="filterRuta"]:checked')?.value || 'Todas';
+      const selectedModalidad = document.querySelector('input[name="filterModalidad"]:checked')?.value || 'Todas';
+      const selectedArea = document.querySelector('input[name="filterArea"]:checked')?.value || 'Todas';
+
+      let count = 0;
+
+      items.forEach((item) => {
+        const titulo = item.getAttribute('data-titulo') || '';
+        const empresa = item.getAttribute('data-empresa') || '';
+        const ruta = item.getAttribute('data-ruta') || '';
+        const modalidad = item.getAttribute('data-modalidad') || '';
+        const area = item.getAttribute('data-area') || '';
+
+        const matchQuery = q === '' || titulo.includes(q) || empresa.includes(q);
+        const matchRuta = selectedRuta === 'Todas' || ruta === selectedRuta;
+        const matchModalidad = selectedModalidad === 'Todas' || modalidad === selectedModalidad;
+        const matchArea = selectedArea === 'Todas' || area === selectedArea;
+
+        if (matchQuery && matchRuta && matchModalidad && matchArea) {
+          item.classList.remove('hidden');
+          count++;
+        } else {
+          item.classList.add('hidden');
+        }
+      });
+
+      if (resultsCount) {
+        resultsCount.textContent = `Mostrando ${count} oportunidades`;
+      }
+
+      if (noVacancies) {
+        if (count === 0) {
+          noVacancies.classList.remove('hidden');
+        } else {
+          noVacancies.classList.add('hidden');
+        }
+      }
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', applyFilters);
+    }
+
+    document.querySelectorAll('input[type="radio"]').forEach((radio) => {
+      radio.addEventListener('change', applyFilters);
+    });
+
+    function resetAll() {
+      if (searchInput) searchInput.value = '';
+      const defaultRuta = document.querySelector('input[name="filterRuta"][value="Todas"]');
+      const defaultMod = document.querySelector('input[name="filterModalidad"][value="Todas"]');
+      const defaultArea = document.querySelector('input[name="filterArea"][value="Todas"]');
+      if (defaultRuta) defaultRuta.checked = true;
+      if (defaultMod) defaultMod.checked = true;
+      if (defaultArea) defaultArea.checked = true;
+      applyFilters();
+    }
+
+    if (resetFiltersBtn) resetFiltersBtn.addEventListener('click', resetAll);
+    if (clearFiltersEmptyBtn) clearFiltersEmptyBtn.addEventListener('click', resetAll);
+
+    // Read URL query params on load (e.g. ?ruta=Pasantia+formativa)
+    const urlParams = new URLSearchParams(window.location.search);
+    const rutaParam = urlParams.get('ruta');
+    const qParam = urlParams.get('q');
+    const ubiParam = urlParams.get('ubicacion');
+
+    if (rutaParam) {
+      const matchRadio = document.querySelector(`input[name="filterRuta"][value="${rutaParam}"]`);
+      if (matchRadio) matchRadio.checked = true;
+    }
+    if (qParam && searchInput) {
+      searchInput.value = qParam;
+    }
+    applyFilters();
+  </script>
+</Layout>

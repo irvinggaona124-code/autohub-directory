@@ -2,60 +2,37 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
 export const GET: APIRoute = async ({ site }) => {
-  const baseUrl = (site ? site.href : 'https://autohub-directory.github.io').replace(/\/$/, '');
+  const baseUrl = (site ? site.href : 'https://irvinggaona124-code.github.io/autohub-directory').replace(/\/$/, '');
 
-  const plantillas = await getCollection('plantillas');
-  const integraciones = await getCollection('integraciones');
-  const alternativas = await getCollection('alternativas');
+  const vacantes = await getCollection('vacantes');
 
   const staticPages = [
     '',
-    '/directorio',
-    '/plantillas',
-    '/bundle',
-    '/integraciones',
-    '/alternativas',
-    '/enviar',
+    '/vacantes',
+    '/estudiantes',
+    '/empresas',
+    '/talento',
+    '/guia',
   ];
 
   const urls: Array<{ loc: string; lastmod?: string; changefreq: string; priority: string }> = [];
 
-  // Static pages
+  // Static views
   for (const page of staticPages) {
     urls.push({
       loc: `${baseUrl}${page}/`,
-      changefreq: page === '' ? 'daily' : 'weekly',
-      priority: page === '' || page === '/bundle' ? '1.0' : '0.8',
+      changefreq: page === '' || page === '/vacantes' ? 'daily' : 'weekly',
+      priority: page === '' ? '1.0' : '0.8',
     });
   }
 
-  // Plantillas
-  for (const p of plantillas) {
+  // Dynamic vacancies
+  for (const v of vacantes) {
     urls.push({
-      loc: `${baseUrl}/plantillas/${p.slug}/`,
-      lastmod: p.data.fecha.toISOString().split('T')[0],
+      loc: `${baseUrl}/vacantes/${v.slug}/`,
+      lastmod: v.data.fechaPublicacion ? v.data.fechaPublicacion.toISOString().split('T')[0] : undefined,
       changefreq: 'weekly',
       priority: '0.9',
-    });
-  }
-
-  // Integraciones (pSEO)
-  for (const i of integraciones) {
-    urls.push({
-      loc: `${baseUrl}/integraciones/${i.slug}/`,
-      lastmod: i.data.fecha.toISOString().split('T')[0],
-      changefreq: 'monthly',
-      priority: '0.8',
-    });
-  }
-
-  // Alternativas
-  for (const a of alternativas) {
-    urls.push({
-      loc: `${baseUrl}/alternativas/${a.slug}/`,
-      lastmod: a.data.fecha.toISOString().split('T')[0],
-      changefreq: 'monthly',
-      priority: '0.8',
     });
   }
 

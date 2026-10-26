@@ -1,173 +1,365 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../layouts/Layout.astro';
-import TemplateCard from '../components/TemplateCard.astro';
-import IntegrationCard from '../components/IntegrationCard.astro';
-import AlternativeCard from '../components/AlternativeCard.astro';
-import NewsletterCta from '../components/NewsletterCta.astro';
+import OpportunityCard from '../components/OpportunityCard.astro';
+import SearchStrip from '../components/SearchStrip.astro';
 
-const plantillas = await getCollection('plantillas');
-const integraciones = await getCollection('integraciones');
-const alternativas = await getCollection('alternativas');
-const herramientas = await getCollection('herramientas');
-
-const plantillasDestacadas = plantillas.slice(0, 3);
-const integracionesPopulares = integraciones.slice(0, 4);
-const alternativasDestacadas = alternativas.slice(0, 3);
+const vacantes = await getCollection('vacantes');
+const vacantesDestacadas = vacantes.slice(0, 6);
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout
-  title="Directorio de Automatización IA & Plantillas n8n"
-  description="Encuentra flujos de trabajo de n8n listos para usar, integraciones paso a paso y alternativas Open-Source a software costoso para Marketing y E-commerce."
+  title="Tu primera oportunidad no debería pedir experiencia"
+  description="Umbral es el portal de pasantías y primeras oportunidades de Panamá. Prácticas formativas y profesionales con mentoría garantizada sin exigir experiencia previa."
 >
-  <!-- Hero Section -->
-  <section class="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28">
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(99,102,241,0.25),rgba(255,255,255,0))]"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <!-- Top Announcement -->
-      <div class="inline-flex items-center gap-2 rounded-full bg-slate-900 border border-slate-700/60 px-3.5 py-1 text-xs text-slate-300 mb-8 shadow-sm">
-        <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-        <span>+120 Flujos de trabajo y alternativas verificadas</span>
-        <span class="text-slate-500">•</span>
-        <a href={`${base}/plantillas`} class="text-brand-400 hover:text-brand-300 font-semibold">Ver Nuevos →</a>
-      </div>
+  <!-- Hero Section (Figma: Hero · First opportunity #6:18) -->
+  <section class="relative overflow-hidden bg-forest-900 text-white pt-16 pb-24 md:pt-24 md:pb-32">
+    <!-- Visual background elements: Terracotta sun & orbital line -->
+    <div class="absolute -right-20 -top-20 w-96 h-96 sm:w-[480px] sm:h-[480px] rounded-full bg-terracotta-500/20 blur-3xl pointer-events-none"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <!-- Hero Copy (Col 1-7) -->
+        <div class="lg:col-span-7 space-y-6">
+          <!-- Eyebrow Pill -->
+          <div class="inline-flex items-center gap-2 rounded-pill bg-white/10 border border-white/20 px-3.5 py-1 text-xs font-bold tracking-wider uppercase text-gold-300">
+            <span>🇵🇦</span> PRIMEROS PASOS · PANAMÁ
+          </div>
 
-      <!-- Main Headline -->
-      <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-[1.15] mb-6 max-w-4xl mx-auto">
-        Automatiza tu Agencia con <span class="bg-gradient-to-r from-brand-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">n8n y Código Abierto</span>
-      </h1>
-      <p class="text-base sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10">
-        Descubre integraciones comprobadas, reemplaza suscripciones caras de SaaS por alternativas Open-Source y descarga plantillas listas para importar en menos de 5 minutos.
-      </p>
+          <!-- Headline with Italic "experiencia" -->
+          <h1 class="font-serif text-4xl sm:text-6xl lg:text-[62px] font-normal tracking-tight leading-[1.1] text-sand-50">
+            Tu primera oportunidad<br class="hidden sm:inline" />
+            no debería pedir <span class="italic text-gold-300 font-serif">experiencia.</span>
+          </h1>
 
-      <!-- Quick Metrics -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto pt-8 border-t border-slate-800/80">
-        <div>
-          <div class="text-2xl sm:text-3xl font-extrabold text-white">450+ USD</div>
-          <div class="text-xs text-slate-400">Ahorro mensual promedio</div>
+          <!-- Subtitle -->
+          <p class="text-base sm:text-lg text-sage-300 max-w-xl leading-relaxed">
+            Un lugar donde tus ganas de aprender cuentan. Encuentra pasantías y prácticas profesionales en Panamá que empiezan por lo que puedes llegar a ser.
+          </p>
+
+          <!-- Hero Actions -->
+          <div class="flex flex-wrap items-center gap-4 pt-2">
+            <a
+              href={`${base}/vacantes`}
+              class="rounded-pill bg-terracotta-500 hover:bg-terracotta-600 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-terracotta-500/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            >
+              Explorar oportunidades
+            </a>
+            <a
+              href={`${base}/guia`}
+              class="rounded-pill bg-sand-50/10 hover:bg-sand-50/20 border border-white/20 px-6 py-3.5 text-sm font-bold text-white transition-all active:scale-[0.98]"
+            >
+              Cómo funciona
+            </a>
+          </div>
+
+          <!-- Micro trust note -->
+          <div class="flex items-center gap-6 text-xs text-sage-400 pt-2 font-medium">
+            <span>✓ Gratis para estudiantes</span>
+            <span>✓ Sin experiencia previa</span>
+            <span>✓ Mentoría garantizada</span>
+          </div>
         </div>
-        <div>
-          <div class="text-2xl sm:text-3xl font-extrabold text-white">100%</div>
-          <div class="text-xs text-slate-400">JSON listos para n8n</div>
-        </div>
-        <div>
-          <div class="text-2xl sm:text-3xl font-extrabold text-white">0 USD</div>
-          <div class="text-xs text-slate-400">Costo por tarea en VPS</div>
-        </div>
-        <div>
-          <div class="text-2xl sm:text-3xl font-extrabold text-white">99.9%</div>
-          <div class="text-xs text-slate-400">Sin alucinaciones en ventas</div>
+
+        <!-- Hero Visual: Potential Profile Card (Col 8-12) -->
+        <div class="lg:col-span-5 relative">
+          <!-- Graphic Terracotta Sun (Figma #6:19) -->
+          <div class="absolute -right-6 -top-6 w-56 h-56 rounded-full bg-terracotta-500 opacity-90 shadow-2xl hidden sm:block"></div>
+          <div class="absolute -right-12 -top-12 w-68 h-68 rounded-full border border-forest-600 hidden sm:block"></div>
+
+          <!-- Floating Interactive Card: Potential Profile Example (Figma #6:82) -->
+          <div class="relative z-10 rounded-2xl bg-sand-50 text-forest-950 p-6 shadow-2xl border border-sand-400">
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <span class="text-[10px] uppercase font-bold tracking-wider text-sage-600">
+                PERFIL DE POTENCIAL · EJEMPLO
+              </span>
+              <span class="rounded-pill bg-forest-900/10 text-forest-900 px-2.5 py-0.5 text-[11px] font-bold">
+                ✓ Verificado
+              </span>
+            </div>
+
+            <div class="flex items-center gap-3.5 mb-4">
+              <div class="w-12 h-12 rounded-full bg-forest-900 text-white font-serif font-bold text-xl flex items-center justify-center">
+                M
+              </div>
+              <div>
+                <h4 class="font-serif text-base font-bold text-forest-900 leading-tight">
+                  Ingeniería Industrial · UTP
+                </h4>
+                <p class="text-xs text-sage-700">
+                  Último año · Ciudad de Panamá
+                </p>
+              </div>
+            </div>
+
+            <!-- Signal Badges Grid -->
+            <div class="grid grid-cols-3 gap-2 mb-4 text-center">
+              <div class="rounded-xl bg-sand-200/80 p-2">
+                <span class="text-[9px] uppercase font-bold text-sage-600 block">Inglés EF SET</span>
+                <span class="text-xs font-bold text-forest-900">B2</span>
+              </div>
+              <div class="rounded-xl bg-sand-200/80 p-2">
+                <span class="text-[9px] uppercase font-bold text-sage-600 block">Índice Académico</span>
+                <span class="text-xs font-bold text-forest-900">2.48 / 3.0</span>
+              </div>
+              <div class="rounded-xl bg-sand-200/80 p-2">
+                <span class="text-[9px] uppercase font-bold text-sage-600 block">Afinidad</span>
+                <span class="text-xs font-bold text-forest-900">Datos</span>
+              </div>
+            </div>
+
+            <div class="space-y-1.5 pt-2 border-t border-sand-300">
+              <div class="flex justify-between text-xs font-medium text-sage-700">
+                <span>Perfil completado</span>
+                <span class="font-bold text-forest-900">88%</span>
+              </div>
+              <div class="w-full bg-sand-300 rounded-full h-1.5 overflow-hidden">
+                <div class="bg-forest-900 h-1.5 rounded-full w-[88%]"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
-    <!-- Section 1: Plantillas Destacadas -->
-    <section>
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+  <!-- Search Strip Component (Figma #6:62) -->
+  <SearchStrip />
+
+  <!-- Trust Notes (Figma #6:77) -->
+  <section class="max-w-5xl mx-auto px-4 py-8 mt-6">
+    <div class="rounded-2xl bg-sand-50/60 border border-sand-400/80 py-4 px-6 flex flex-wrap items-center justify-around gap-4 text-xs font-semibold text-forest-900">
+      <span class="flex items-center gap-1.5">✓ Sin experiencia previa</span>
+      <span class="flex items-center gap-1.5">⌂ Estudiantes de Panamá</span>
+      <span class="flex items-center gap-1.5">◉ Perfil privado por defecto</span>
+      <span class="flex items-center gap-1.5">♡ Gratis para postular</span>
+    </div>
+  </section>
+
+  <!-- Section: Potential Profile (Figma #6:82 - "UNA FORMA DISTINTA DE EMPEZAR") -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-xs font-bold uppercase tracking-wider text-forest-800 bg-sand-200 px-3 py-1 rounded-pill mb-3 inline-block">
+        UNA FORMA DISTINTA DE EMPEZAR
+      </span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-normal text-forest-900 mb-4">
+        El CV no cuenta toda la historia.
+      </h2>
+      <p class="text-sm sm:text-base text-sage-700 leading-relaxed">
+        Si todavía no has trabajado, eso no te define. Muestra tus intereses, tu formación y lo que ya sabes hacer a través de señales concretas.
+      </p>
+    </div>
+
+    <!-- 4 Pillars Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="rounded-card border border-sand-500 bg-sand-50 p-6">
+        <div class="text-xs font-mono font-bold text-terracotta-600 mb-2">01 · ACADEMIA</div>
+        <h3 class="font-serif text-lg font-bold text-forest-900 mb-2">Lo que estás aprendiendo</h3>
+        <p class="text-xs text-sage-700 leading-relaxed">
+          Tu carrera, universidad (UTP, UP, USMA, etc.) y el tipo de práctica o pasantía que buscas convalidar.
+        </p>
+      </div>
+
+      <div class="rounded-card border border-sand-500 bg-sand-50 p-6">
+        <div class="text-xs font-mono font-bold text-terracotta-600 mb-2">02 · INGLÉS</div>
+        <h3 class="font-serif text-lg font-bold text-forest-900 mb-2">Un nivel comprobable</h3>
+        <p class="text-xs text-sage-700 leading-relaxed">
+          Enlace opcional a tu certificado EF SET, TOEFL o pruebas de nivel cuando lo tengas listo.
+        </p>
+      </div>
+
+      <div class="rounded-card border border-sand-500 bg-sand-50 p-6">
+        <div class="text-xs font-mono font-bold text-terracotta-600 mb-2">03 · INTERESES</div>
+        <h3 class="font-serif text-lg font-bold text-forest-900 mb-2">Cómo te gusta resolver</h3>
+        <p class="text-xs text-sage-700 leading-relaxed">
+          Una guía breve sobre el tipo de tareas que disfrutas: analizar datos, diseñar, organizar procesos o redactar.
+        </p>
+      </div>
+
+      <div class="rounded-card border border-sand-500 bg-sand-50 p-6">
+        <div class="text-xs font-mono font-bold text-terracotta-600 mb-2">04 · PROYECTOS</div>
+        <h3 class="font-serif text-lg font-bold text-forest-900 mb-2">Algo que hiciste</h3>
+        <p class="text-xs text-sage-700 leading-relaxed">
+          Comparte un trabajo académico, investigación, proyecto comunitario o portafolio de clase.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Featured Opportunities (Figma #6:106 - "OPORTUNIDADES DE EJEMPLO") -->
+  <section class="bg-sand-200/50 py-16 sm:py-24 border-y border-sand-500/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-4">
         <div>
-          <div class="text-xs font-bold uppercase tracking-wider text-brand-400 mb-1">Economía de Plantillas</div>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Plantillas de Flujos de Trabajo Premium
+          <span class="text-xs font-bold uppercase tracking-wider text-forest-800 bg-sand-50 px-3 py-1 rounded-pill mb-2 inline-block">
+            OPORTUNIDADES DE APRENDIZAJE
+          </span>
+          <h2 class="font-serif text-3xl sm:text-4xl font-normal text-forest-900">
+            Un primer paso, a tu manera.
           </h2>
-          <p class="text-sm text-slate-400 mt-1">
-            Archivos JSON documentados paso a paso para ahorrar entre 200 y 600 USD mensuales en horas de programación.
+          <p class="text-sm text-sage-700 mt-1">
+            Vacantes formativas con estipendio transparente y mentoría garantizada en Panamá.
           </p>
         </div>
-        <a href={`${base}/plantillas`} class="text-sm font-semibold text-brand-400 hover:text-brand-300 flex items-center gap-1 shrink-0">
-          Explorar todo el catálogo ({plantillas.length}) →
+
+        <a
+          href={`${base}/vacantes`}
+          class="inline-flex items-center gap-1 text-sm font-bold text-forest-900 hover:text-terracotta-600 transition-colors"
+        >
+          <span>Ver todas las vacantes ({vacantes.length})</span>
+          <span>→</span>
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {plantillasDestacadas.map((p) => (
-          <TemplateCard
-            titulo={p.data.titulo}
-            slug={p.slug}
-            descripcionCorta={p.data.descripcionCorta}
-            precio={p.data.precio}
-            precioOriginal={p.data.precioOriginal}
-            motor={p.data.motor}
-            categoria={p.data.categoria}
-            nodos={p.data.nodos}
-            ahorroLaboralMensual={p.data.ahorroLaboralMensual}
-            payhipUrl={p.data.payhipUrl}
-            destacado={p.data.destacado}
+      <!-- Grid of Opportunities -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {vacantesDestacadas.map((v) => (
+          <OpportunityCard
+            id={v.slug}
+            empresa={v.data.empresa}
+            inicialEmpresa={v.data.inicialEmpresa}
+            titulo={v.data.titulo}
+            ruta={v.data.ruta}
+            estipendio={v.data.estipendio}
+            modalidad={v.data.modalidad}
+            ubicacion={v.data.ubicacion}
+            area={v.data.area}
+            mentorAsignado={v.data.mentorAsignado}
+            sinExperiencia={v.data.sinExperiencia}
           />
         ))}
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Section 2: Integraciones pSEO -->
-    <section>
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+  <!-- Section: Three Entry Routes (Figma #6:151 - "TRES CAMINOS POSIBLES") -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <span class="text-xs font-bold uppercase tracking-wider text-forest-800 bg-sand-200 px-3 py-1 rounded-pill mb-3 inline-block">
+        TRES CAMINOS POSIBLES
+      </span>
+      <h2 class="font-serif text-3xl sm:text-4xl font-normal text-forest-900 mb-4">
+        No todos los primeros pasos son iguales.
+      </h2>
+      <p class="text-sm sm:text-base text-sage-700 leading-relaxed">
+        Confirma qué ruta encaja mejor con tu momento académico y los requisitos de tu universidad.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="rounded-card border border-sand-500 bg-sand-50 p-8 flex flex-col justify-between">
         <div>
-          <div class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-1">SEO Programático</div>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Guías de Integración Paso a Paso
-          </h2>
-          <p class="text-sm text-slate-400 mt-1">
-            Conecta tus herramientas comerciales favoritas con plataformas de automatización sin intermediarios costosos.
+          <span class="w-10 h-10 rounded-full bg-forest-900/10 text-forest-900 font-bold flex items-center justify-center text-sm mb-4">
+            01
+          </span>
+          <h3 class="font-serif text-xl font-bold text-forest-900 mb-2">Pasantía formativa</h3>
+          <p class="text-xs sm:text-sm text-sage-700 leading-relaxed mb-6">
+            Aprendizaje guiado dentro de una empresa. Diseñada para estudiantes activos que buscan adquirir habilidades prácticas sin descuidar sus materias.
           </p>
         </div>
-        <a href={`${base}/integraciones`} class="text-sm font-semibold text-brand-400 hover:text-brand-300 flex items-center gap-1 shrink-0">
-          Ver todas las integraciones →
+        <a href={`${base}/vacantes?ruta=Pasant%C3%ADa+formativa`} class="text-xs font-bold text-forest-900 hover:text-terracotta-600">
+          Explorar pasantías →
         </a>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {integracionesPopulares.map((i) => (
-          <IntegrationCard
-            titulo={i.data.titulo}
-            slug={i.slug}
-            appA={i.data.appA}
-            appB={i.data.appB}
-            motor={i.data.motor}
-            casoDeUso={i.data.casoDeUso}
-            nodosEstimados={i.data.nodosEstimados}
-            dificultad={i.data.dificultad}
-            tiempoConfiguracion={i.data.tiempoConfiguracion}
-          />
-        ))}
-      </div>
-    </section>
-
-    <!-- Section 3: Alternativas Open-Source -->
-    <section>
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+      <div class="rounded-card border border-terracotta-500/50 bg-sand-50 p-8 flex flex-col justify-between shadow-md shadow-terracotta-500/10">
         <div>
-          <div class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">Ahorro en Suscripciones</div>
-          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-            Alternativas de Código Abierto a SaaS Propietarios
-          </h2>
-          <p class="text-sm text-slate-400 mt-1">
-            Sustituye cuotas mensuales recurrentes por herramientas autohospedadas con control total de tus datos.
+          <span class="w-10 h-10 rounded-full bg-terracotta-500 text-white font-bold flex items-center justify-center text-sm mb-4">
+            02
+          </span>
+          <h3 class="font-serif text-xl font-bold text-forest-900 mb-2">Práctica profesional</h3>
+          <p class="text-xs sm:text-sm text-sage-700 leading-relaxed mb-6">
+            Experiencia supervisada ligada formalmente a tu plan de graduación universitaria. Cumple con las horas exigidas por UTP, UP u otras casas de estudio.
           </p>
         </div>
-        <a href={`${base}/alternativas`} class="text-sm font-semibold text-brand-400 hover:text-brand-300 flex items-center gap-1 shrink-0">
-          Ver comparativas →
+        <a href={`${base}/vacantes?ruta=Pr%C3%A1ctica+profesional`} class="text-xs font-bold text-terracotta-600 hover:underline">
+          Explorar prácticas profesionales →
         </a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {alternativasDestacadas.map((a) => (
-          <AlternativeCard
-            titulo={a.data.titulo}
-            slug={a.slug}
-            saasPropietario={a.data.saasPropietario}
-            alternativaOpenSource={a.data.alternativaOpenSource}
-            categoria={a.data.categoria}
-            ahorroEstimadoMensual={a.data.ahorroEstimadoMensual}
-            ventajasOpenSource={a.data.ventajasOpenSource}
-          />
-        ))}
+      <div class="rounded-card border border-sand-500 bg-sand-50 p-8 flex flex-col justify-between">
+        <div>
+          <span class="w-10 h-10 rounded-full bg-forest-900/10 text-forest-900 font-bold flex items-center justify-center text-sm mb-4">
+            03
+          </span>
+          <h3 class="font-serif text-xl font-bold text-forest-900 mb-2">Primer empleo</h3>
+          <p class="text-xs sm:text-sm text-sage-700 leading-relaxed mb-6">
+            Una entrada profesional con acompañamiento inicial para recién graduados. Posiciones junior diseñadas para crecer desde el día uno.
+          </p>
+        </div>
+        <a href={`${base}/vacantes?ruta=Primer+empleo`} class="text-xs font-bold text-forest-900 hover:text-terracotta-600">
+          Explorar primeros empleos →
+        </a>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Newsletter CTA Section -->
-    <NewsletterCta />
-  </div>
+  <!-- Section: For Employers (Figma #6:169 - "PARA EMPRESAS FORMADORAS") -->
+  <section class="bg-forest-900 text-white py-20 my-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-6 space-y-6">
+          <span class="text-xs font-bold uppercase tracking-wider text-gold-300 bg-white/10 px-3 py-1 rounded-pill inline-block">
+            PARA EMPRESAS
+          </span>
+          <h2 class="font-serif text-3xl sm:text-5xl font-normal text-sand-50 leading-tight">
+            Forma a la persona que tu equipo necesita.
+          </h2>
+          <p class="text-sm sm:text-base text-sage-300 leading-relaxed">
+            Publica una oportunidad con mentoría y condiciones honestas. Los estudiantes de hoy son los líderes de proyecto que tu empresa requerirá mañana.
+          </p>
+
+          <div class="flex flex-wrap gap-4 pt-4">
+            <a
+              href={`${base}/empresas#publicar`}
+              class="rounded-pill bg-terracotta-500 hover:bg-terracotta-600 px-6 py-3.5 text-xs font-bold text-white transition-all hover:scale-[1.02]"
+            >
+              Publicar oportunidad
+            </a>
+            <a
+              href={`${base}/talento`}
+              class="rounded-pill bg-white/10 hover:bg-white/20 border border-white/20 px-6 py-3.5 text-xs font-bold text-white transition-all"
+            >
+              Ver talento anónimo
+            </a>
+          </div>
+        </div>
+
+        <!-- Pact Rules (Col 7-12) -->
+        <div class="lg:col-span-6 space-y-4">
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-5 flex items-start gap-4">
+            <span class="font-mono text-xs font-bold text-gold-300 bg-white/10 w-8 h-8 rounded-lg flex items-center justify-center shrink-0">
+              01
+            </span>
+            <div>
+              <h4 class="font-bold text-sand-50 text-sm mb-1">Define el aprendizaje</h4>
+              <p class="text-xs text-sage-300">Explica con claridad qué habilidades técnicas o de gestión desarrollará el pasante durante su estadía.</p>
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-5 flex items-start gap-4">
+            <span class="font-mono text-xs font-bold text-gold-300 bg-white/10 w-8 h-8 rounded-lg flex items-center justify-center shrink-0">
+              02
+            </span>
+            <div>
+              <h4 class="font-bold text-sand-50 text-sm mb-1">Asigna una persona mentora</h4>
+              <p class="text-xs text-sage-300">Cada estudiante debe contar con un supervisor responsable que guíe su avance y resuelva dudas.</p>
+            </div>
+          </div>
+
+          <div class="rounded-2xl bg-white/5 border border-white/10 p-5 flex items-start gap-4">
+            <span class="font-mono text-xs font-bold text-gold-300 bg-white/10 w-8 h-8 rounded-lg flex items-center justify-center shrink-0">
+              03
+            </span>
+            <div>
+              <h4 class="font-bold text-sand-50 text-sm mb-1">Explica horario y condiciones</h4>
+              <p class="text-xs text-sage-300">Estipendio transparente en Balboas (B/.) y horarios compatibles con la carga de clases universitarias.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </Layout>
