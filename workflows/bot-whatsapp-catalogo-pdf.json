@@ -1,0 +1,214 @@
+{
+  "name": "Bot WhatsApp con Catálogo PDF y OpenAI",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "whatsapp-incoming",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook WhatsApp",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.body.entry[0].changes[0].value.messages[0].type }}",
+              "operation": "equal",
+              "value2": "text"
+            }
+          ]
+        }
+      },
+      "id": "2",
+      "name": "Filtrar Texto Válido",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "userMessage",
+              "value": "={{ $json.body.entry[0].changes[0].value.messages[0].text.body }}"
+            },
+            {
+              "name": "userPhone",
+              "value": "={{ $json.body.entry[0].changes[0].value.messages[0].from }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3",
+      "name": "Extraer Variables",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [650, 250]
+    },
+    {
+      "parameters": {
+        "url": "https://tusitio.com/catalogo-oficial.pdf",
+        "responseFormat": "file",
+        "options": {}
+      },
+      "id": "4",
+      "name": "Descargar Catálogo PDF",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [850, 250]
+    },
+    {
+      "parameters": {
+        "operation": "extractText",
+        "binaryPropertyName": "data"
+      },
+      "id": "5",
+      "name": "Extraer Texto PDF",
+      "type": "n8n-nodes-base.readPdf",
+      "typeVersion": 1,
+      "position": [1050, 250]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "messages": {
+          "messageValues": [
+            {
+              "role": "system",
+              "content": "Eres un asistente comercial de ventas. Responde ÚNICAMENTE utilizando los datos contenidos en el siguiente catálogo de productos en PDF. Si el producto o precio no existe en el documento, responde amablemente indicando que un asesor humano lo contactará en breve. No inventes precios ni promociones.\n\nContenido del Catálogo:\n{{ $node['Extraer Texto PDF'].json.text }}"
+            },
+            {
+              "role": "user",
+              "content": "={{ $node['Extraer Variables'].json.userMessage }}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "id": "6",
+      "name": "OpenAI GPT-4o-mini",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [1250, 250]
+    },
+    {
+      "parameters": {
+        "phoneNumber": "={{ $node['Extraer Variables'].json.userPhone }}",
+        "message": "={{ $json.message.content }}",
+        "options": {}
+      },
+      "id": "7",
+      "name": "Enviar Respuesta WhatsApp",
+      "type": "n8n-nodes-base.whatsapp",
+      "typeVersion": 1,
+      "position": [1450, 250]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "sheetId": "HISTORIAL_CONSULTAS_ID",
+        "range": "Sheet1!A:D",
+        "dataMode": "autoMapInputData",
+        "options": {}
+      },
+      "id": "8",
+      "name": "Registrar en Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1650, 250]
+    }
+  ],
+  "connections": {
+    "Webhook WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Filtrar Texto Válido",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filtrar Texto Válido": {
+      "main": [
+        [
+          {
+            "node": "Extraer Variables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Variables": {
+      "main": [
+        [
+          {
+            "node": "Descargar Catálogo PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Descargar Catálogo PDF": {
+      "main": [
+        [
+          {
+            "node": "Extraer Texto PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extraer Texto PDF": {
+      "main": [
+        [
+          {
+            "node": "OpenAI GPT-4o-mini",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI GPT-4o-mini": {
+      "main": [
+        [
+          {
+            "node": "Enviar Respuesta WhatsApp",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Enviar Respuesta WhatsApp": {
+      "main": [
+        [
+          {
+            "node": "Registrar en Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

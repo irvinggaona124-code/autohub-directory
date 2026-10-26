@@ -1,0 +1,264 @@
+{
+  "name": "Extractor y Enriquecedor de Leads B2B con Google Maps y Firecrawl",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 7
+            }
+          ]
+        }
+      },
+      "id": "1",
+      "name": "Cron Semanal",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "query",
+              "value": "Agencias de marketing digital en Madrid"
+            },
+            {
+              "name": "radius",
+              "value": "15000"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2",
+      "name": "Parámetros de Búsqueda",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/textsearch/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "={{ $node['Parámetros de Búsqueda'].json.query }}"
+            },
+            {
+              "name": "radius",
+              "value": "={{ $node['Parámetros de Búsqueda'].json.radius }}"
+            },
+            {
+              "name": "key",
+              "value": "TU_GOOGLE_MAPS_API_KEY"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3",
+      "name": "Google Places API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [600, 300]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "results",
+        "options": {}
+      },
+      "id": "4",
+      "name": "Desglosar Resultados",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [800, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://maps.googleapis.com/maps/api/place/details/json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "place_id",
+              "value": "={{ $json.place_id }}"
+            },
+            {
+              "name": "fields",
+              "value": "name,website,formatted_phone_number,rating,user_ratings_total,formatted_address"
+            },
+            {
+              "name": "key",
+              "value": "TU_GOOGLE_MAPS_API_KEY"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5",
+      "name": "Detalles de Comercio",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1000, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.result.website }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "6",
+      "name": "¿Tiene Página Web?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [1200, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer TU_FIRECRAWL_API_KEY"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $json.result.website }}\",\n  \"formats\": [\"markdown\", \"extract\"],\n  \"extract\": {\n    \"schema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"email\": {\"type\": \"string\"},\n        \"phone\": {\"type\": \"string\"},\n        \"linkedin\": {\"type\": \"string\"}\n      }\n    }\n  }\n}",
+        "options": {}
+      },
+      "id": "7",
+      "name": "Firecrawl Scrape & Extract",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1400, 250]
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "sheetId": "LEADS_PROSPECCION_ID",
+        "range": "Leads!A:G",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Empresa": "={{ $node['Detalles de Comercio'].json.result.name }}",
+            "Sitio_Web": "={{ $node['Detalles de Comercio'].json.result.website }}",
+            "Telefono": "={{ $node['Detalles de Comercio'].json.result.formatted_phone_number }}",
+            "Direccion": "={{ $node['Detalles de Comercio'].json.result.formatted_address }}",
+            "Email": "={{ $json.data.extract.email || 'No detectado' }}",
+            "LinkedIn": "={{ $json.data.extract.linkedin || 'No detectado' }}",
+            "Fecha": "={{ $now.format('YYYY-MM-DD') }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "8",
+      "name": "Guardar en Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 2,
+      "position": [1650, 250]
+    }
+  ],
+  "connections": {
+    "Cron Semanal": {
+      "main": [
+        [
+          {
+            "node": "Parámetros de Búsqueda",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parámetros de Búsqueda": {
+      "main": [
+        [
+          {
+            "node": "Google Places API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Places API": {
+      "main": [
+        [
+          {
+            "node": "Desglosar Resultados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Desglosar Resultados": {
+      "main": [
+        [
+          {
+            "node": "Detalles de Comercio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detalles de Comercio": {
+      "main": [
+        [
+          {
+            "node": "¿Tiene Página Web?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "¿Tiene Página Web?": {
+      "main": [
+        [
+          {
+            "node": "Firecrawl Scrape & Extract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Firecrawl Scrape & Extract": {
+      "main": [
+        [
+          {
+            "node": "Guardar en Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

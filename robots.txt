@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://irvinggaona124-code.github.io/autohub-directory/sitemap-index.xml
