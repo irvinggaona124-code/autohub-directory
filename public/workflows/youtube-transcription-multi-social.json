@@ -1,0 +1,138 @@
+{
+  "name": "Reutilización de Contenido de YouTube a 5 Redes Sociales con IA",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "repurpose-video",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook Entrante",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/streamers~youtube-transcript-scraper/run-sync-get-dataset-items",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "token",
+              "value": "TU_APIFY_TOKEN"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"videoUrls\": [\"{{ $json.body.videoUrl }}\"]\n}",
+        "options": {}
+      },
+      "id": "2",
+      "name": "Apify YouTube Transcript",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "messages": {
+          "messageValues": [
+            {
+              "role": "system",
+              "content": "Eres un estratega de contenido B2B y ghostwriter viral. Transforma la transcripción adjunta en 3 activos de alto impacto:\n1. Un post de LinkedIn con estructura de gancho, historia de dolor, 3 aprendizajes y llamada a la acción.\n2. Un hilo de Twitter/X de 5 tweets accionables.\n3. Una edición de newsletter semanal de 300 palabras."
+            },
+            {
+              "role": "user",
+              "content": "Transcripción del video:\n{{ $json[0].text }}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.5
+        }
+      },
+      "id": "3",
+      "name": "Redactor IA Multi-Formato",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1,
+      "position": [700, 300]
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "create",
+        "databaseId": "NOTION_CONTENT_CALENDAR_ID",
+        "title": "={{ $node['Webhook Entrante'].json.body.videoTitle || 'Nuevo Video Reutilizado' }}",
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Estado",
+              "selectValue": "Listo para Revisión"
+            },
+            {
+              "key": "Canal_Origen",
+              "urlValue": "={{ $node['Webhook Entrante'].json.body.videoUrl }}"
+            }
+          ]
+        },
+        "blockUi": {
+          "blockValues": [
+            {
+              "textContent": "={{ $json.message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4",
+      "name": "Guardar en Notion Calendar",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2,
+      "position": [950, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Entrante": {
+      "main": [
+        [
+          {
+            "node": "Apify YouTube Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apify YouTube Transcript": {
+      "main": [
+        [
+          {
+            "node": "Redactor IA Multi-Formato",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Redactor IA Multi-Formato": {
+      "main": [
+        [
+          {
+            "node": "Guardar en Notion Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

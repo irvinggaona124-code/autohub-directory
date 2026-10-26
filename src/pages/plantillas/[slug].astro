@@ -28,9 +28,17 @@ const productSchema = {
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: '4.9',
-    reviewCount: '27',
+    reviewCount: '34',
   },
 };
+
+// Map slug to public workflow json
+const jsonWorkflowMap: Record<string, string> = {
+  'bot-whatsapp-catalogo-pdf-n8n-openai': '/workflows/bot-whatsapp-catalogo-pdf.json',
+  'google-maps-lead-scraper-firecrawl-n8n': '/workflows/google-maps-lead-scraper.json',
+  'youtube-transcription-multi-social-repurpose': '/workflows/youtube-transcription-multi-social.json',
+};
+const workflowJsonPath = jsonWorkflowMap[plantilla.slug];
 ---
 
 <Layout
@@ -51,7 +59,7 @@ const productSchema = {
     <!-- Header Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start mb-12">
       <div class="lg:col-span-2">
-        <div class="flex items-center gap-2 mb-4">
+        <div class="flex flex-wrap items-center gap-2 mb-4">
           <span class="rounded-md bg-brand-500/10 border border-brand-500/20 px-3 py-1 text-xs font-semibold text-brand-400">
             {plantilla.data.motor}
           </span>
@@ -72,15 +80,15 @@ const productSchema = {
         </p>
 
         <!-- Value highlight box -->
-        <div class="rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-4 flex items-center justify-between">
+        <div class="rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div class="flex items-center gap-3">
             <span class="text-2xl">💰</span>
             <div>
               <div class="text-sm font-bold text-emerald-400">Ahorro laboral mensual estimado</div>
-              <div class="text-xs text-slate-400">Basado en 20 horas de trabajo humano ahorradas al mes</div>
+              <div class="text-xs text-slate-400">Basado en ~20 horas de trabajo manual ahorradas al mes</div>
             </div>
           </div>
-          <span class="text-lg font-extrabold text-emerald-300">{plantilla.data.ahorroLaboralMensual}</span>
+          <span class="text-lg font-extrabold text-emerald-300 shrink-0">{plantilla.data.ahorroLaboralMensual}</span>
         </div>
       </div>
 
@@ -93,24 +101,34 @@ const productSchema = {
           )}
         </div>
         <p class="text-xs text-slate-400 mb-6">
-          Pago único sin mensualidades. Actualizaciones y archivo JSON descargable de por vida.
+          Pago único sin comisiones mensuales ocultas. Archivo JSON descargable listo para importar.
         </p>
 
         <a
           href={plantilla.data.payhipUrl}
           class="payhip-buy-button w-full block text-center rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 py-3.5 text-sm font-bold text-white hover:from-brand-500 hover:to-indigo-500 shadow-lg shadow-brand-600/30 transition-all hover:scale-[1.02] mb-3"
         >
-          Descargar Plantilla Ahora
+          Descargar Plantilla Completa
         </a>
+
+        {workflowJsonPath && (
+          <a
+            href={workflowJsonPath}
+            download
+            class="w-full block text-center rounded-xl bg-slate-800 py-2.5 text-xs font-semibold text-slate-300 hover:bg-slate-700 hover:text-white transition-colors mb-3"
+          >
+            Descargar Muestra Demo (.json)
+          </a>
+        )}
 
         {plantilla.data.gumroadUrl && (
           <a
             href={plantilla.data.gumroadUrl}
             target="_blank"
             rel="noopener noreferrer"
-            class="w-full block text-center rounded-xl bg-slate-800 py-2.5 text-xs font-semibold text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
+            class="w-full block text-center rounded-xl border border-slate-700/60 py-2 text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
           >
-            Comprar vía Gumroad
+            Comprar en Gumroad Discover
           </a>
         )}
 
@@ -122,7 +140,7 @@ const productSchema = {
             <span class="text-emerald-400">✓</span> Archivo JSON compatible con n8n Cloud y Self-hosted
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-emerald-400">✓</span> Guía de configuración y mapeo de variables
+            <span class="text-emerald-400">✓</span> Mapeo de variables y video guía incluido
           </div>
         </div>
       </div>
