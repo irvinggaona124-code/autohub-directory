@@ -1,0 +1,171 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import TemplateCard from '../components/TemplateCard.astro';
+import IntegrationCard from '../components/IntegrationCard.astro';
+import AlternativeCard from '../components/AlternativeCard.astro';
+import NewsletterCta from '../components/NewsletterCta.astro';
+
+const plantillas = await getCollection('plantillas');
+const integraciones = await getCollection('integraciones');
+const alternativas = await getCollection('alternativas');
+const herramientas = await getCollection('herramientas');
+
+const plantillasDestacadas = plantillas.slice(0, 3);
+const integracionesPopulares = integraciones.slice(0, 4);
+const alternativasDestacadas = alternativas.slice(0, 3);
+---
+
+<Layout
+  title="Directorio de Automatización IA & Plantillas n8n"
+  description="Encuentra flujos de trabajo de n8n listos para usar, integraciones paso a paso y alternativas Open-Source a software costoso para Marketing y E-commerce."
+>
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden pt-12 pb-20 md:pt-20 md:pb-28">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(99,102,241,0.25),rgba(255,255,255,0))]"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <!-- Top Announcement -->
+      <div class="inline-flex items-center gap-2 rounded-full bg-slate-900 border border-slate-700/60 px-3.5 py-1 text-xs text-slate-300 mb-8 shadow-sm">
+        <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>+120 Flujos de trabajo y alternativas verificadas</span>
+        <span class="text-slate-500">•</span>
+        <a href="/plantillas" class="text-brand-400 hover:text-brand-300 font-semibold">Ver Nuevos →</a>
+      </div>
+
+      <!-- Main Headline -->
+      <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-[1.15] mb-6 max-w-4xl mx-auto">
+        Automatiza tu Agencia con <span class="bg-gradient-to-r from-brand-400 via-indigo-300 to-purple-400 bg-clip-text text-transparent">n8n y Código Abierto</span>
+      </h1>
+      <p class="text-base sm:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10">
+        Descubre integraciones comprobadas, reemplaza suscripciones caras de SaaS por alternativas Open-Source y descarga plantillas listas para importar en menos de 5 minutos.
+      </p>
+
+      <!-- Quick Metrics -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto pt-8 border-t border-slate-800/80">
+        <div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-white">450+ USD</div>
+          <div class="text-xs text-slate-400">Ahorro mensual promedio</div>
+        </div>
+        <div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-white">100%</div>
+          <div class="text-xs text-slate-400">JSON listos para n8n</div>
+        </div>
+        <div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-white">0 USD</div>
+          <div class="text-xs text-slate-400">Costo por tarea en VPS</div>
+        </div>
+        <div>
+          <div class="text-2xl sm:text-3xl font-extrabold text-white">99.9%</div>
+          <div class="text-xs text-slate-400">Sin alucinaciones en ventas</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+    <!-- Section 1: Plantillas Destacadas -->
+    <section>
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-wider text-brand-400 mb-1">Economía de Plantillas</div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Plantillas de Flujos de Trabajo Premium
+          </h2>
+          <p class="text-sm text-slate-400 mt-1">
+            Archivos JSON documentados paso a paso para ahorrar entre 200 y 600 USD mensuales en horas de programación.
+          </p>
+        </div>
+        <a href="/plantillas" class="text-sm font-semibold text-brand-400 hover:text-brand-300 flex items-center gap-1 shrink-0">
+          Explorar todo el catálogo ({plantillas.length}) →
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {plantillasDestacadas.map((p) => (
+          <TemplateCard
+            titulo={p.data.titulo}
+            slug={p.slug}
+            descripcionCorta={p.data.descripcionCorta}
+            precio={p.data.precio}
+            precioOriginal={p.data.precioOriginal}
+            motor={p.data.motor}
+            categoria={p.data.categoria}
+            nodos={p.data.nodos}
+            ahorroLaboralMensual={p.data.ahorroLaboralMensual}
+            payhipUrl={p.data.payhipUrl}
+            destacado={p.data.destacado}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 2: Integraciones pSEO -->
+    <section>
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-1">SEO Programático</div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Guías de Integración Paso a Paso
+          </h2>
+          <p class="text-sm text-slate-400 mt-1">
+            Conecta tus herramientas comerciales favoritas con plataformas de automatización sin intermediarios costosos.
+          </p>
+        </div>
+        <a href="/integraciones" class="text-sm font-semibold text-brand-400 hover:text-brand-300 flex items-center gap-1 shrink-0">
+          Ver todas las integraciones →
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {integracionesPopulares.map((i) => (
+          <IntegrationCard
+            titulo={i.data.titulo}
+            slug={i.slug}
+            appA={i.data.appA}
+            appB={i.data.appB}
+            motor={i.data.motor}
+            casoDeUso={i.data.casoDeUso}
+            nodosEstimados={i.data.nodosEstimados}
+            dificultad={i.data.dificultad}
+            tiempoConfiguracion={i.data.tiempoConfiguracion}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Section 3: Alternativas Open-Source -->
+    <section>
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4">
+        <div>
+          <div class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">Ahorro en Suscripciones</div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            Alternativas de Código Abierto a SaaS Propietarios
+          </h2>
+          <p class="text-sm text-slate-400 mt-1">
+            Sustituye cuotas mensuales recurrentes por herramientas autohospedadas con control total de tus datos.
+          </p>
+        </div>
+        <a href="/alternativas" class="text-sm font-semibold text-brand-400 hover:text-brand-300 flex items-center gap-1 shrink-0">
+          Ver comparativas →
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {alternativasDestacadas.map((a) => (
+          <AlternativeCard
+            titulo={a.data.titulo}
+            slug={a.slug}
+            saasPropietario={a.data.saasPropietario}
+            alternativaOpenSource={a.data.alternativaOpenSource}
+            categoria={a.data.categoria}
+            ahorroEstimadoMensual={a.data.ahorroEstimadoMensual}
+            ventajasOpenSource={a.data.ventajasOpenSource}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Newsletter CTA Section -->
+    <NewsletterCta />
+  </div>
+</Layout>

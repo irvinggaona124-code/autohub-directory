@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TemplateCard from '../../components/TemplateCard.astro';
+
+const plantillas = await getCollection('plantillas');
+---
+
+<Layout
+  title="Catálogo de Plantillas de Automatización n8n & Notion"
+  description="Plantillas preconstruidas en JSON y sistemas Notion para agencias y e-commerce. Ahorra cientos de dólares en costos laborales."
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Header -->
+    <div class="max-w-3xl mb-12">
+      <div class="text-xs font-bold uppercase tracking-wider text-brand-400 mb-2">Activos Digitales</div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+        Plantillas de Flujos de Trabajo Listas para Importar
+      </h1>
+      <p class="text-base text-slate-400 leading-relaxed">
+        Descarga archivos JSON verificados para n8n y tableros operativos de Notion. Importa en 1 clic, añade tus claves API y automatiza tu captación, ventas y contenido de inmediato.
+      </p>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {plantillas.map((p) => (
+        <TemplateCard
+          titulo={p.data.titulo}
+          slug={p.slug}
+          descripcionCorta={p.data.descripcionCorta}
+          precio={p.data.precio}
+          precioOriginal={p.data.precioOriginal}
+          motor={p.data.motor}
+          categoria={p.data.categoria}
+          nodos={p.data.nodos}
+          ahorroLaboralMensual={p.data.ahorroLaboralMensual}
+          payhipUrl={p.data.payhipUrl}
+          destacado={p.data.destacado}
+        />
+      ))}
+    </div>
+  </div>
+</Layout>

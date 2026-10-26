@@ -1,0 +1,124 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const integraciones = await getCollection('integraciones');
+  return integraciones.map((integ) => ({
+    params: { slug: integ.slug },
+    props: { integ },
+  }));
+}
+
+const { integ } = Astro.props;
+const { Content } = await integ.render();
+
+const howToSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: integ.data.titulo,
+  description: integ.data.descripcionCorta,
+  totalTime: 'PT20M',
+  step: [
+    {
+      '@type': 'HowToStep',
+      name: 'Configurar Webhooks o Disparadores',
+      text: `Configura el disparador de entrada para conectar ${integ.data.appA} en ${integ.data.motor}.`,
+    },
+    {
+      '@type': 'HowToStep',
+      name: 'Filtrar y Transformar Datos',
+      text: 'Mapea y valida las variables requeridas para evitar registros duplicados.',
+    },
+    {
+      '@type': 'HowToStep',
+      name: `Sincronizar hacia ${integ.data.appB}`,
+      text: `Envía la carga útil formateada hacia ${integ.data.appB} y verifica la respuesta de la API.`,
+    },
+  ],
+};
+---
+
+<Layout
+  title={integ.data.titulo}
+  description={integ.data.descripcionCorta}
+  schema={howToSchema}
+>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-xs text-slate-500 mb-8">
+      <a href="/" class="hover:text-white transition-colors">Inicio</a>
+      <span>/</span>
+      <a href="/integraciones" class="hover:text-white transition-colors">Integraciones</a>
+      <span>/</span>
+      <span class="text-slate-300 truncate max-w-xs">{integ.data.titulo}</span>
+    </nav>
+
+    <!-- Header -->
+    <div class="mb-10">
+      <div class="flex items-center gap-2 mb-4">
+        <span class="rounded-md bg-brand-500/10 border border-brand-500/20 px-3 py-1 text-xs font-semibold text-brand-400">
+          con {integ.data.motor}
+        </span>
+        <span class="rounded-md bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300">
+          {integ.data.categoria}
+        </span>
+        <span class="rounded-md bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400">
+          ⏱️ {integ.data.tiempoConfiguracion}
+        </span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight mb-4">
+        {integ.data.titulo}
+      </h1>
+
+      <p class="text-base sm:text-lg text-slate-400 leading-relaxed mb-6">
+        {integ.data.descripcionCorta}
+      </p>
+
+      <!-- Apps Connect Visual -->
+      <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg font-bold text-white shadow">
+            {integ.data.appA.slice(0, 2).toUpperCase()}
+          </div>
+          <div class="text-brand-400 font-extrabold text-xl">➔</div>
+          <div class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center text-lg font-bold text-white shadow">
+            {integ.data.appB.slice(0, 2).toUpperCase()}
+          </div>
+          <div>
+            <div class="text-sm font-bold text-white">{integ.data.appA} + {integ.data.appB}</div>
+            <div class="text-xs text-slate-400">{integ.data.nodosEstimados} nodos de arquitectura</div>
+          </div>
+        </div>
+
+        {integ.data.plantillaSlug && (
+          <a
+            href={`/plantillas/${integ.data.plantillaSlug}`}
+            class="rounded-xl bg-brand-600 px-4 py-2.5 text-xs font-bold text-white hover:bg-brand-500 shadow-md shadow-brand-600/25 transition-all"
+          >
+            Descargar Plantilla JSON →
+          </a>
+        )}
+      </div>
+    </div>
+
+    <!-- Requirements -->
+    <div class="rounded-2xl border border-slate-800 bg-slate-900/40 p-6 mb-12">
+      <h3 class="text-sm font-bold uppercase tracking-wider text-slate-300 mb-3">Requisitos Previos</h3>
+      <ul class="space-y-2 text-sm text-slate-400">
+        {integ.data.requisitos.map((r) => (
+          <li class="flex items-start gap-2">
+            <span class="text-brand-400">✓</span>
+            <span>{r}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Guide Content -->
+    <div class="prose prose-invert prose-indigo max-w-none pt-8 border-t border-slate-800">
+      <Content />
+    </div>
+  </div>
+</Layout>

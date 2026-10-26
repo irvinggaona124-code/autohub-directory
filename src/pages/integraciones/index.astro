@@ -1,0 +1,40 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import IntegrationCard from '../../components/IntegrationCard.astro';
+
+const integraciones = await getCollection('integraciones');
+---
+
+<Layout
+  title="Guías de Integración pSEO para n8n y Make"
+  description="Aprende a conectar cualquier aplicación con n8n y Make paso a paso. Guías técnicas de SEO programático con casos de uso reales para agencias."
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-3xl mb-12">
+      <div class="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2">SEO Programático</div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+        Directorio de Integraciones de Automatización
+      </h1>
+      <p class="text-base text-slate-400 leading-relaxed">
+        Tutoriales y flujos de arquitectura técnica para conectar herramientas de marketing, ventas, CRM y comercio electrónico sin pagar suscripciones costosas en plataformas intermediarias.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {integraciones.map((i) => (
+        <IntegrationCard
+          titulo={i.data.titulo}
+          slug={i.slug}
+          appA={i.data.appA}
+          appB={i.data.appB}
+          motor={i.data.motor}
+          casoDeUso={i.data.casoDeUso}
+          nodosEstimados={i.data.nodosEstimados}
+          dificultad={i.data.dificultad}
+          tiempoConfiguracion={i.data.tiempoConfiguracion}
+        />
+      ))}
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,38 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import AlternativeCard from '../../components/AlternativeCard.astro';
+
+const alternativas = await getCollection('alternativas');
+---
+
+<Layout
+  title="Alternativas Open-Source a Software Propietario"
+  description="Reduce tus costos fijos de software empresarial. Reemplaza Hootsuite, Zapier y HubSpot por herramientas de código abierto verificadas."
+>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="max-w-3xl mb-12">
+      <div class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-2">Ahorro en Software</div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mb-4">
+        Alternativas de Código Abierto para Negocios
+      </h1>
+      <p class="text-base text-slate-400 leading-relaxed">
+        Descubre herramientas autohospedadas con las que puedes ahorrar miles de dólares al año eliminando cargos por usuario, por contacto y por número de tareas ejecutadas.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {alternativas.map((a) => (
+        <AlternativeCard
+          titulo={a.data.titulo}
+          slug={a.slug}
+          saasPropietario={a.data.saasPropietario}
+          alternativaOpenSource={a.data.alternativaOpenSource}
+          categoria={a.data.categoria}
+          ahorroEstimadoMensual={a.data.ahorroEstimadoMensual}
+          ventajasOpenSource={a.data.ventajasOpenSource}
+        />
+      ))}
+    </div>
+  </div>
+</Layout>

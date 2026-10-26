@@ -1,0 +1,54 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="border-t border-slate-800 bg-slate-950 mt-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      <!-- Col 1: Bio -->
+      <div class="md:col-span-1">
+        <a href="/" class="flex items-center gap-2 mb-4">
+          <span class="text-xl font-bold text-white">Auto<span class="text-brand-400">Hub</span></span>
+        </a>
+        <p class="text-sm text-slate-400 leading-relaxed mb-4">
+          El directorio abierto de flujos de trabajo con n8n, Make y software Open-Source para reducir costos laborales en Marketing y Comercio Electrónico.
+        </p>
+        <div class="text-xs text-slate-500">
+          Desplegado 100% en arquitectura estática de costo cero.
+        </div>
+      </div>
+
+      <!-- Col 2: Secciones -->
+      <div>
+        <h4 class="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-4">Explorar</h4>
+        <ul class="space-y-2.5 text-sm text-slate-400">
+          <li><a href="/directorio" class="hover:text-white transition-colors">Directorio de Herramientas</a></li>
+          <li><a href="/integraciones" class="hover:text-white transition-colors">Integraciones pSEO</a></li>
+          <li><a href="/alternativas" class="hover:text-white transition-colors">Alternativas Open-Source</a></li>
+          <li><a href="/plantillas" class="hover:text-white transition-colors">Plantillas n8n & Notion</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Monetización & Envíos -->
+      <div>
+        <h4 class="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-4">Creadores</h4>
+        <ul class="space-y-2.5 text-sm text-slate-400">
+          <li><a href="/enviar" class="hover:text-white transition-colors">Publicar Herramienta (+ Fast Track)</a></li>
+          <li><a href="/enviar#patrocinio" class="hover:text-white transition-colors">Listados Destacados</a></li>
+          <li><a href="/plantillas" class="hover:text-white transition-colors">Vender Plantillas</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Transparencia & Legal -->
+      <div>
+        <h4 class="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-4">Transparencia</h4>
+        <p class="text-xs text-slate-400 leading-relaxed mb-3">
+          <strong>Aviso de Afiliación:</strong> Algunos enlaces en este directorio pueden generar comisiones para sostener la infraestructura sin costo para ti. Solo recomendamos herramientas validadas en producción.
+        </p>
+        <p class="text-xs text-slate-500">
+          © {year} AutoHub. Todos los derechos reservados.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
