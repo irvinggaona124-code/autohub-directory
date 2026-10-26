@@ -26,6 +26,8 @@ const {
   payhipUrl,
   destacado = false,
 } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <div class={`relative flex flex-col justify-between rounded-2xl border p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl ${
@@ -53,7 +55,7 @@ const {
 
     <!-- Title & Desc -->
     <h3 class="text-lg font-bold text-white group-hover:text-brand-300 transition-colors mb-2">
-      <a href={`/plantillas/${slug}`} class="focus:outline-none">
+      <a href={`${base}/plantillas/${slug}`} class="focus:outline-none">
         {titulo}
       </a>
     </h3>
@@ -83,7 +85,7 @@ const {
 
     <div class="flex gap-2">
       <a
-        href={`/plantillas/${slug}`}
+        href={`${base}/plantillas/${slug}`}
         class="rounded-lg bg-slate-800 px-3 py-2 text-xs font-medium text-slate-300 hover:bg-slate-700 hover:text-white transition-colors"
       >
         Detalles

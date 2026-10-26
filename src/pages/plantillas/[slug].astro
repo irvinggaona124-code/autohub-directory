@@ -32,11 +32,14 @@ const productSchema = {
   },
 };
 
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 // Map slug to public workflow json
 const jsonWorkflowMap: Record<string, string> = {
-  'bot-whatsapp-catalogo-pdf-n8n-openai': '/workflows/bot-whatsapp-catalogo-pdf.json',
-  'google-maps-lead-scraper-firecrawl-n8n': '/workflows/google-maps-lead-scraper.json',
-  'youtube-transcription-multi-social-repurpose': '/workflows/youtube-transcription-multi-social.json',
+  'bot-whatsapp-catalogo-pdf-n8n-openai': `${base}/workflows/bot-whatsapp-catalogo-pdf.json`,
+  'google-maps-lead-scraper-firecrawl-n8n': `${base}/workflows/google-maps-lead-scraper.json`,
+  'youtube-transcription-multi-social-repurpose': `${base}/workflows/youtube-transcription-multi-social.json`,
+  'notion-agency-os-crm-finance-tracker': `${base}/workflows/notion-agency-os-schema.json`,
 };
 const workflowJsonPath = jsonWorkflowMap[plantilla.slug];
 ---
@@ -49,9 +52,9 @@ const workflowJsonPath = jsonWorkflowMap[plantilla.slug];
   <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Breadcrumb -->
     <nav class="flex items-center gap-2 text-xs text-slate-500 mb-8">
-      <a href="/" class="hover:text-white transition-colors">Inicio</a>
+      <a href={`${base}/`} class="hover:text-white transition-colors">Inicio</a>
       <span>/</span>
-      <a href="/plantillas" class="hover:text-white transition-colors">Plantillas</a>
+      <a href={`${base}/plantillas`} class="hover:text-white transition-colors">Plantillas</a>
       <span>/</span>
       <span class="text-slate-300 truncate max-w-xs">{plantilla.data.titulo}</span>
     </nav>
@@ -137,7 +140,7 @@ const workflowJsonPath = jsonWorkflowMap[plantilla.slug];
             <span class="text-emerald-400">✓</span> Entrega digital instantánea
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-emerald-400">✓</span> Archivo JSON compatible con n8n Cloud y Self-hosted
+            <span class="text-emerald-400">✓</span> Compatible con n8n Cloud y Self-hosted
           </div>
           <div class="flex items-center gap-2">
             <span class="text-emerald-400">✓</span> Mapeo de variables y video guía incluido

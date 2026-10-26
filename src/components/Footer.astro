@@ -1,4 +1,5 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const year = new Date().getFullYear();
 ---
 
@@ -7,7 +8,7 @@ const year = new Date().getFullYear();
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
       <!-- Col 1: Bio -->
       <div class="md:col-span-1">
-        <a href="/" class="flex items-center gap-2 mb-4">
+        <a href={`${base}/`} class="flex items-center gap-2 mb-4">
           <span class="text-xl font-bold text-white">Auto<span class="text-brand-400">Hub</span></span>
         </a>
         <p class="text-sm text-slate-400 leading-relaxed mb-4">
@@ -22,10 +23,10 @@ const year = new Date().getFullYear();
       <div>
         <h4 class="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-4">Explorar</h4>
         <ul class="space-y-2.5 text-sm text-slate-400">
-          <li><a href="/directorio" class="hover:text-white transition-colors">Directorio de Herramientas</a></li>
-          <li><a href="/integraciones" class="hover:text-white transition-colors">Integraciones pSEO</a></li>
-          <li><a href="/alternativas" class="hover:text-white transition-colors">Alternativas Open-Source</a></li>
-          <li><a href="/plantillas" class="hover:text-white transition-colors">Plantillas n8n & Notion</a></li>
+          <li><a href={`${base}/directorio`} class="hover:text-white transition-colors">Directorio de Herramientas</a></li>
+          <li><a href={`${base}/integraciones`} class="hover:text-white transition-colors">Integraciones pSEO</a></li>
+          <li><a href={`${base}/alternativas`} class="hover:text-white transition-colors">Alternativas Open-Source</a></li>
+          <li><a href={`${base}/plantillas`} class="hover:text-white transition-colors">Plantillas n8n & Notion</a></li>
         </ul>
       </div>
 
@@ -33,9 +34,9 @@ const year = new Date().getFullYear();
       <div>
         <h4 class="text-sm font-semibold uppercase tracking-wider text-slate-200 mb-4">Creadores</h4>
         <ul class="space-y-2.5 text-sm text-slate-400">
-          <li><a href="/enviar" class="hover:text-white transition-colors">Publicar Herramienta (+ Fast Track)</a></li>
-          <li><a href="/enviar#patrocinio" class="hover:text-white transition-colors">Listados Destacados</a></li>
-          <li><a href="/plantillas" class="hover:text-white transition-colors">Vender Plantillas</a></li>
+          <li><a href={`${base}/enviar`} class="hover:text-white transition-colors">Publicar Herramienta (+ Fast Track)</a></li>
+          <li><a href={`${base}/enviar#patrocinio`} class="hover:text-white transition-colors">Listados Destacados</a></li>
+          <li><a href={`${base}/plantillas`} class="hover:text-white transition-colors">Vender Plantillas</a></li>
         </ul>
       </div>
 

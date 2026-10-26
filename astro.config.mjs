@@ -3,8 +3,8 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://autohub-directory.github.io',
-  base: '/',
+  site: 'https://irvinggaona124-code.github.io',
+  base: '/autohub-directory',
   integrations: [
     tailwind({
       applyBaseStyles: true,

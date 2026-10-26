@@ -1,19 +1,20 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const currentPath = Astro.url.pathname;
 
 const navItems = [
-  { name: 'Directorio', href: '/directorio' },
-  { name: 'Integraciones pSEO', href: '/integraciones' },
-  { name: 'Alternativas Open-Source', href: '/alternativas' },
-  { name: 'Plantillas n8n', href: '/plantillas' },
-  { name: 'Pack Completo', href: '/bundle', badge: '-70%' },
+  { name: 'Directorio', href: `${base}/directorio` },
+  { name: 'Integraciones pSEO', href: `${base}/integraciones` },
+  { name: 'Alternativas Open-Source', href: `${base}/alternativas` },
+  { name: 'Plantillas n8n', href: `${base}/plantillas` },
+  { name: 'Pack Completo', href: `${base}/bundle`, badge: '-70%' },
 ];
 ---
 
 <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-950/80 border-b border-slate-800">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
     <!-- Logo -->
-    <a href="/" class="flex items-center gap-3 group">
+    <a href={`${base}/`} class="flex items-center gap-3 group">
       <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-brand-500/25 group-hover:scale-105 transition-transform">
         ⚡
       </div>
@@ -30,7 +31,7 @@ const navItems = [
     <!-- Nav Links Desktop -->
     <nav class="hidden md:flex items-center gap-1">
       {navItems.map((item) => {
-        const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+        const isActive = currentPath === item.href || (item.href !== `${base}/` && currentPath.startsWith(item.href));
         return (
           <a
             href={item.href}
@@ -54,7 +55,7 @@ const navItems = [
     <!-- Right Actions -->
     <div class="flex items-center gap-3">
       <a
-        href="/enviar"
+        href={`${base}/enviar`}
         class="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-lg bg-gradient-to-r from-brand-600 to-indigo-600 text-white hover:from-brand-500 hover:to-indigo-500 shadow-md shadow-brand-600/20 transition-all hover:shadow-brand-600/35 hover:-translate-y-0.5"
       >
         <span>+ Publicar Herramienta</span>

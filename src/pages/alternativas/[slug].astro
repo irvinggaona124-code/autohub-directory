@@ -23,6 +23,8 @@ const articleSchema = {
     name: 'AutoHub Editorial',
   },
 };
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <Layout
@@ -33,9 +35,9 @@ const articleSchema = {
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Breadcrumb -->
     <nav class="flex items-center gap-2 text-xs text-slate-500 mb-8">
-      <a href="/" class="hover:text-white transition-colors">Inicio</a>
+      <a href={`${base}/`} class="hover:text-white transition-colors">Inicio</a>
       <span>/</span>
-      <a href="/alternativas" class="hover:text-white transition-colors">Alternativas</a>
+      <a href={`${base}/alternativas`} class="hover:text-white transition-colors">Alternativas</a>
       <span>/</span>
       <span class="text-slate-300 truncate max-w-xs">{alt.data.titulo}</span>
     </nav>
